@@ -1,0 +1,27 @@
+<html>
+    <head></head>
+    <body>
+        <script src="../../v4.0.0-rc-2023-01-25/dist/lcjs.iife.js"></script>
+        <script src="../../dist/lcjs-themes.iife.js"></script>
+        <script>
+            const { makeFlatTheme } = lcjsThemes
+            const { ColorHEX, ColorRGBA, lightningChart, SolidFill } = lcjs
+
+            const flatDarkTheme = makeFlatTheme({
+                backgroundColor: ColorHEX('141619'),
+                textColor: ColorHEX('c5ced7'),
+                dataColors: [ColorHEX('e24d42')],
+                axisColor: ColorHEX('00000000'),
+                gridLineColor: ColorHEX('2c3235'),
+                uiBackgroundColor: ColorHEX('141619'),
+                uiBorderColor: ColorHEX('ffffff'),
+                fontFamily: 'Verdana',
+                dashboardSplitterColor: ColorRGBA(100, 100, 100),
+            })
+
+            const chart = lightningChart().ChartXY({ theme: flatDarkTheme })
+            chart.addLineSeries().addArrayY(new Array(100).fill(0).map((_) => Math.random()))
+            chart.addLegendBox().add(chart)
+        </script>
+    </body>
+</html>

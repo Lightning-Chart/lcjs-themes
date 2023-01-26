@@ -1,0 +1,51 @@
+{
+    "name": "@arction/lcjs-themes",
+    "version": "1.0.0",
+    "description": "Open-source Themes package for LightningChart JS",
+    "keywords": [
+        "Arction",
+        "lightningchart",
+        "lightning chart"
+    ],
+    "homepage": "https://github.com/Arction/lcjs-themes",
+    "license": "MIT",
+    "author": "LightningChart Ltd.",
+    "files": [
+        "dist/lcjs-themes.d.ts",
+        "dist/lcjs-themes.iife.js",
+        "dist/lcjs-themes.js",
+        "dist/lcjs-themes.cjs",
+        "dist/lcjs-themes.mjs",
+        "dist/lcjs-themes.esm.js",
+        "dist/lcjs-themes.iife.es2019.js",
+        "LICENSE",
+        "README.md",
+        "package.json"
+    ],
+    "main": "dist/lcjs-themes.js",
+    "types": "dist/lcjs-themes.d.ts",
+    "module": "dist/lcjs-themes.esm.js",
+    "iife": "dist/lcjs-themes.iife.js",
+    "exports": {
+        "import": "./dist/lcjs-themes.mjs",
+        "require": "./dist/lcjs-themes.cjs"
+    },
+    "engines": {
+        "node": ">=12"
+    },
+    "scripts": {
+        "ts": "tsc -p ./tsconfig.json && tsc -p ./tsconfig.json --target ES5 --outDir temp/lcjs-themes/es5",
+        "build": "npm run ts && rollup -c rollup.config.js"
+    },
+    "dependencies": {
+        "@arction/lcjs": "^4.0.0"
+    },
+    "devDependencies": {
+        "@rollup/plugin-babel": "^5.3.1",
+        "@rollup/plugin-commonjs": "^22.0.2",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^14.0.0",
+        "rollup": "^2.77.0",
+        "typescript": "4.8.4"
+    }
+}
