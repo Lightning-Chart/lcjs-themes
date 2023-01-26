@@ -1,0 +1,25 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "ES6",
+        "incremental": true,
+        "tsBuildInfoFile": "temp/lcjs-themes/tsconfig.tsbuildinfo",
+        "sourceMap": true,
+        "forceConsistentCasingInFileNames": true,
+        "removeComments": false,
+        "pretty": true,
+        "experimentalDecorators": true,
+        "strict": true,
+        "strictFunctionTypes": false,
+        "baseUrl": "src",
+        "downlevelIteration": true,
+        "declaration": true,
+        "declarationMap": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "lib": ["dom", "ES2015", "ES2016", "ES2017", "ES2018", "ES2019", "ES2020"],
+        "outDir": "temp/lcjs-themes/es2019"
+    },
+    "exclude": ["node_modules", "dist", "temp/lcjs-themes"]
+}
