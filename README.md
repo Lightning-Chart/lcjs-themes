@@ -30,11 +30,11 @@ chart.addLineSeries().addArrayY(new Array(10).fill(0).map(_ => Math.random()))
 chart.addLegendBox().add(chart)
 ```
 
-See [CHANGELOG](https://github.com/Arction/lcjs-themes/blob/master/CHANGELOG.md) for latest additions to package contents.
+See [CHANGELOG](https://github.com/Arction/lcjs-themes/blob/main/CHANGELOG.md) for latest additions to package contents.
 
 ## Examples
 
-See [examples](https://github.com/Arction/lcjs-themes/blob/master/examples/) on how to use themes in different scenarios:
+See [examples](https://github.com/Arction/lcjs-themes/blob/main/examples/) on how to use themes in different scenarios:
 
 ### HTML/JS
 
@@ -52,6 +52,6 @@ Learn more about LightningChart JS [on our web site](https://lightningchart.com/
 
 ## Contribute
 
-Suggest edits and additions with [https://github.com/Arction/lcjs-themes/issues](GitHub Issues)
+Suggest edits and additions with [GitHub Issues](https://github.com/Arction/lcjs-themes/issues)
 
-Suggest integrating your own code changes with [https://github.com/Arction/lcjs-themes/pulls](GitHub Pull Requests)
+Suggest integrating your own code changes with [GitHub Pull Requests](https://github.com/Arction/lcjs-themes/pulls)
