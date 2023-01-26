@@ -16,9 +16,7 @@ import {
   transparentFill,
 } from "@arction/lcjs";
 
-// TODO
-const TODOfill = new SolidFill({ color: ColorRGBA(0, 255, 0) });
-const TODOstroke = new SolidLine({ thickness: 2, fillStyle: TODOfill });
+const colorMissing = ColorRGBA(0, 255, 0);
 
 const StylePalette = <T, R>(
   array: T[],
@@ -66,6 +64,15 @@ export type FlatThemeOptions = {
    * Font family of all text. Same as CSS `font-family`.
    */
   fontFamily: string;
+
+  // ----- Feature specific properties (should be kept optional) -----
+
+  /**
+   * **Only needed for Dashboard**
+   *
+   * Color for Dashboard splitter lines.
+   */
+  dashboardSplitterColor?: Color;
 };
 
 /**
@@ -75,6 +82,7 @@ export type FlatThemeOptions = {
  */
 const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
   const whiteFillStyle = new SolidFill({ color: ColorRGBA(255, 255, 255) });
+  const blackFillStyle = new SolidFill({ color: ColorRGBA(0, 0, 0) });
   //
   //
   //
@@ -84,8 +92,12 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
   });
   const highlightColorOffset = ColorRGBA(60, 60, 60, 60);
   const highlightColorOffsetAxisOverlay = ColorRGBA(255, 255, 255, 40);
-  // TODO
-  const dashboardSplitterStyle = TODOstroke;
+  const dashboardSplitterStyle = new SolidLine({
+    thickness: 4,
+    fillStyle: new SolidFill({
+      color: options.dashboardSplitterColor || colorMissing,
+    }),
+  });
   const chartBackgroundFillStyle = lcjsBackgroundFillStyle;
   const seriesBackgroundFillStyle = transparentFill;
   const fontChartTitles = new FontSettings({
@@ -161,7 +173,10 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
   const dataFillStyleNegative = new SolidFill({
     color: ColorRGBA(255, 112, 76),
   });
-  const wireframeStyle = TODOstroke;
+  const wireframeStyle = new SolidLine({
+    thickness: 1,
+    fillStyle: blackFillStyle,
+  });
   const axisStrokeStyle = new SolidLine({
     thickness: 1,
     fillStyle: new SolidFill({ color: options.axisColor }),
@@ -193,12 +208,13 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     majorTickStyle: tickStyle,
     minorTickStyle: tickStyle,
   });
-  // TODO
-  const bandFillStyle = TODOfill;
-  // TODO
-  const bandStrokeStyle = TODOstroke;
-  // TODO
-  const constantLineStrokeStyle = TODOstroke;
+  const cursorGridStrokeStyle = new SolidLine({
+    thickness: 1,
+    fillStyle: whiteFillStyle,
+  });
+  const bandFillStyle = zoomRectangleFillStyle;
+  const bandStrokeStyle = zoomRectangleStrokeStyle;
+  const constantLineStrokeStyle = cursorGridStrokeStyle;
   const uiButtonFillStyle = whiteFillStyle;
   const uiBackgroundFillStyle = new SolidFill({
     color: options.uiBackgroundColor,
@@ -206,10 +222,6 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
   const uiBackgroundStrokeStyle = new SolidLine({
     thickness: 1,
     fillStyle: new SolidFill({ color: options.uiBorderColor }),
-  });
-  const cursorGridStrokeStyle = new SolidLine({
-    thickness: 1,
-    fillStyle: whiteFillStyle,
   });
 
   const flatTheme: Theme = {
@@ -245,18 +257,22 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     segmentSeriesStrokeStyle: seriesStrokeStylePalette,
     boxSeriesBodyFillStyle: seriesFillStylePalette(0),
     boxSeriesBodyStrokeStyle: emptyLine,
-    // TODO
-    boxSeriesStrokeStyle: TODOstroke,
+    boxSeriesStrokeStyle: new SolidLine({
+      thickness: 1,
+      fillStyle: whiteFillStyle,
+    }),
     boxSeriesMedianStrokeStyle: new SolidLine({
       thickness: 1,
-      fillStyle: new SolidFill({ color: ColorRGBA(0, 0, 0) }),
+      fillStyle: blackFillStyle,
     }),
     ohlcCandleBodyFillStylePositive: dataFillStylePositive,
     ohlcCandleBodyFillStyleNegative: dataFillStyleNegative,
     ohlcCandleBodyStrokeStylePositive: emptyLine,
     ohlcCandleBodyStrokeStyleNegative: emptyLine,
-    // TODO
-    ohlcCandleStrokeStyle: TODOstroke,
+    ohlcCandleStrokeStyle: new SolidLine({
+      thickness: 1,
+      fillStyle: whiteFillStyle,
+    }),
     ohlcBarStrokeStylePositive: new SolidLine({
       thickness: 2,
       fillStyle: dataFillStylePositive,
@@ -370,46 +386,37 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     mapChartTitleFont: fontChartTitles,
     mapChartTitleFillStyle: textFillStyle,
     mapChartFillStyle: primaryDataFillStyle,
-    // TODO
-    mapChartStrokeStyle: new SolidLine({ thickness: 1, fillStyle: TODOfill }),
+    mapChartStrokeStyle: new SolidLine({
+      thickness: 1,
+      fillStyle: blackFillStyle,
+    }),
     mapChartOutlierRegionFillStyle: emptyFill,
-    // TODO
     mapChartOutlierRegionStrokeStyle: new SolidLine({
       thickness: 1,
-      fillStyle: TODOfill,
+      fillStyle: whiteFillStyle,
     }),
-    // TODO
     mapChartSeparateRegionFillStyle: uiBackgroundFillStyle,
-    // TODO
     mapChartSeparateRegionStrokeStyle: uiBackgroundStrokeStyle,
     dataGridBackgroundFillStyle: chartBackgroundFillStyle,
     dataGridBackgroundStrokeStyle: emptyLine,
     dataGridTitleFont: fontChartTitles,
     dataGridTitleFillStyle: textFillStyle,
     dataGridTextFont: fontOther,
-    dataGridTextFillStyle: primaryDataFillStyle,
-    // TODO
-    dataGridCellBackgroundFillStyle: TODOfill,
-    // TODO
-    dataGridBorderStrokeStyle: new SolidLine({
-      thickness: 1,
-      fillStyle: TODOfill,
+    dataGridTextFillStyle: textFillStyle,
+    dataGridCellBackgroundFillStyle: seriesBackgroundFillStyle,
+    dataGridBorderStrokeStyle: uiBackgroundStrokeStyle,
+    dataGridScrollBarBackgroundFillStyle: new SolidFill({
+      color: ColorRGBA(30, 30, 30),
     }),
-    // TODO
-    dataGridScrollBarBackgroundFillStyle: TODOfill,
     dataGridScrollBarBackgroundStrokeStyle: emptyLine,
-    // TODO
-    dataGridScrollBarFillStyle: TODOfill,
-    // TODO
+    dataGridScrollBarFillStyle: new SolidFill({ color: ColorRGBA(30, 30, 30) }),
     dataGridScrollBarStrokeStyle: uiBackgroundStrokeStyle,
-    // TODO
-    dataGridScrollBarButtonFillStyle: TODOfill,
-    // TODO
+    dataGridScrollBarButtonFillStyle: new SolidFill({
+      color: ColorRGBA(30, 30, 30),
+    }),
     dataGridScrollBarButtonStrokeStyle: uiBackgroundStrokeStyle,
-    // TODO
     dataGridScrollBarButtonArrowFillStyle: uiButtonFillStyle,
-    // TODO
-    dataGridScrollBarButtonArrowStrokeStyle: uiBackgroundStrokeStyle,
+    dataGridScrollBarButtonArrowStrokeStyle: emptyLine,
     sparkLineChartStrokeStyle: seriesStrokeStylePalette(0),
     sparkPointChartFillStyle: seriesFillStylePalette(0),
     sparkBarChartFillStyle: seriesFillStylePalette(0),
@@ -417,7 +424,6 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     sparkAreaChartFillStyle: areaSeriesFillStylePalette(0),
     sparkAreaChartStrokeStyle: dataBorderStrokePalette(0),
     sparkPieChartFillStyle: seriesFillStylePalette,
-    // TODO
     sparkPieChartStrokeStyle: uiBackgroundStrokeStyle,
     sparkChartBandFillStyle: bandFillStyle,
     sparkChartBandStrokeStyle: bandStrokeStyle,
@@ -428,8 +434,7 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     spiderChartTitleFillStyle: textFillStyle,
     spiderChartSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
     spiderChartSeriesBackgroundStrokeStyle: emptyLine,
-    // TODO
-    spiderChartWebStyle: new SolidLine({ thickness: 2, fillStyle: TODOfill }),
+    spiderChartWebStyle: uiBackgroundStrokeStyle,
     spiderChartScaleLabelFillStyle: textFillStyle,
     spiderChartScaleLabelFont: fontOther,
     spiderChartAxisLabelFillStyle: textFillStyle,
@@ -444,41 +449,35 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     pieChartTitleFont: fontAxisTitles,
     pieChartTitleFillStyle: textFillStyle,
     pieChartSliceFillStylePalette: seriesFillStylePalette,
-    // TODO
     pieChartSliceStrokeStyle: uiBackgroundStrokeStyle,
     pieChartSliceLabelFont: fontOther,
     pieChartSliceLabelFillStyle: textFillStyle,
-    // TODO
-    pieChartConnectorStrokeStyle: TODOstroke,
+    pieChartConnectorStrokeStyle: uiBackgroundStrokeStyle,
     funnelChartBackgroundFillStyle: chartBackgroundFillStyle,
     funnelChartBackgroundStrokeStyle: emptyLine,
     funnelChartTitleFont: fontChartTitles,
     funnelChartTitleFillStyle: textFillStyle,
     funnelChartSliceFillStylePalette: seriesFillStylePalette,
-    // TODO
     funnelChartSliceStrokeStyle: uiBackgroundStrokeStyle,
     funnelChartSliceLabelFont: fontOther,
     funnelChartSliceLabelFillStyle: textFillStyle,
-    // TODO
-    funnelChartConnectorStrokeStyle: TODOstroke,
+    funnelChartConnectorStrokeStyle: uiBackgroundStrokeStyle,
     pyramidChartBackgroundFillStyle: chartBackgroundFillStyle,
     pyramidChartBackgroundStrokeStyle: emptyLine,
     pyramidChartTitleFont: fontChartTitles,
     pyramidChartTitleFillStyle: textFillStyle,
     pyramidChartSliceFillStylePalette: seriesFillStylePalette,
-    // TODO
     pyramidChartSliceStrokeStyle: uiBackgroundStrokeStyle,
     pyramidChartSliceLabelFont: fontOther,
     pyramidChartSliceLabelFillStyle: textFillStyle,
-    // TODO
-    pyramidChartConnectorStrokeStyle: TODOstroke,
+    pyramidChartConnectorStrokeStyle: uiBackgroundStrokeStyle,
     gaugeChartBackgroundFillStyle: chartBackgroundFillStyle,
     gaugeChartBackgroundStrokeStyle: emptyLine,
     gaugeChartTitleFont: fontChartTitles,
     gaugeChartTitleFillStyle: textFillStyle,
-    // TODO
-    gaugeChartEmptyGaugeFillStyle: TODOfill,
-    // TODO
+    gaugeChartEmptyGaugeFillStyle: new SolidFill({
+      color: ColorRGBA(30, 30, 30),
+    }),
     gaugeChartEmptyGaugeStrokeStyle: uiBackgroundStrokeStyle,
     gaugeChartGaugeFillStyle: primaryDataFillStyle,
     gaugeChartIntervalLabelsFillStyle: textFillStyle,
@@ -487,7 +486,6 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     gaugeChartValueLabelFont: fontOther,
     uiPanelBackgroundFillStyle: chartBackgroundFillStyle,
     uiPanelBackgroundStrokeStyle: emptyLine,
-    // TODO
     onScreenMenuBackgroundColor: ColorRGBA(254, 204, 0, 0.7),
     uiButtonFillStyle,
     uiButtonStrokeStyle: uiBackgroundStrokeStyle,
@@ -514,8 +512,8 @@ const makeLightningChartThemeFlat = (options: FlatThemeOptions): Theme => {
     cursorResultTableTextFont: fontOther,
     cursorGridStrokeStyleX: cursorGridStrokeStyle,
     cursorGridStrokeStyleY: cursorGridStrokeStyle,
-    // TODO
-    chartMarkerPointMarkerFillStyle: TODOfill,
+
+    chartMarkerPointMarkerFillStyle: whiteFillStyle,
     chartMarkerPointMarkerStrokeStyle: emptyLine,
   };
   return flatTheme;

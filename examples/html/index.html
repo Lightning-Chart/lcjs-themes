@@ -5,7 +5,7 @@
         <script src="../../dist/themes.iife.js"></script>
         <script>
             const { makeLightningChartThemeFlat } = themes
-            const { ColorHEX, lightningChart, SolidFill } = lcjs
+            const { ColorHEX, ColorRGBA, lightningChart, SolidFill } = lcjs
 
             const flatDarkTheme = makeLightningChartThemeFlat({
                 backgroundColor: ColorHEX('141619'),
@@ -16,6 +16,7 @@
                 uiBackgroundColor: ColorHEX('141619'),
                 uiBorderColor: ColorHEX('ffffff'),
                 fontFamily: 'Verdana',
+                dashboardSplitterColor: ColorRGBA(100, 100, 100)
             })
 
             const chart = lightningChart().ChartXY({ theme: flatDarkTheme })
