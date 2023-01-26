@@ -9,16 +9,16 @@ npm run build
 # Copy build to package dir
 mkdir -p ./package/dist
 cp \
- ./dist/themes.js \
- ./dist/themes.iife.js \
- ./dist/themes.mjs \
- ./dist/themes.cjs \
- ./dist/themes.esm.js \
- ./dist/themes.iife.es2019.js \
+ ./dist/lcjs-themes.js \
+ ./dist/lcjs-themes.iife.js \
+ ./dist/lcjs-themes.mjs \
+ ./dist/lcjs-themes.cjs \
+ ./dist/lcjs-themes.esm.js \
+ ./dist/lcjs-themes.iife.es2019.js \
  ./package/dist
 
 # Copy typings file to package dir
-sed '/^$/d' ./temp/themes/es5/index.d.ts > ./package/dist/themes.d.ts
+sed '/^$/d' ./temp/lcjs-themes/es5/index.d.ts > ./package/dist/lcjs-themes.d.ts
 
 # Copy meta files to package dir
 cp -r ./publish/* ./package

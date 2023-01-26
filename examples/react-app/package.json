@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@arction/lcjs": "file:../../v4.0.0-rc-2023-01-25",
-    "@arction/themes": "file:../../package",
+    "@arction/lcjs-themes": "file:../../package",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

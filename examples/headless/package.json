@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@arction/lcjs": "file:../../v4.0.0-rc-2023-01-25",
-    "@arction/themes": "file:../../package",
+    "@arction/lcjs-themes": "file:../../package",
     "@arction/lcjs-headless": "^1.5.0"
   },
   "author": "",

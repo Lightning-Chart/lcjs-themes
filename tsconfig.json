@@ -4,7 +4,7 @@
     "target": "ES2019",
     "module": "ES6",
     "incremental": true,
-    "tsBuildInfoFile": "temp/themes/tsconfig.tsbuildinfo",
+    "tsBuildInfoFile": "temp/lcjs-themes/tsconfig.tsbuildinfo",
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "removeComments": false,
@@ -27,11 +27,11 @@
       "ES2019",
       "ES2020"
     ],
-    "outDir": "temp/themes/es2019"
+    "outDir": "temp/lcjs-themes/es2019"
   },
   "exclude": [
     "node_modules",
     "dist",
-    "temp/themes"
+    "temp/lcjs-themes"
   ]
 }

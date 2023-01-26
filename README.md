@@ -7,11 +7,11 @@
 ## Usage
 
 ```sh
-npm i @arction/themes
+npm i @arction/lcjs-themes
 ```
 
 ```ts
-import { makeLightningChartThemeFlat } from "@arction/themes"
+import { makeLightningChartThemeFlat } from "@arction/lcjs-themes"
 import { ColorHEX, lightningChart, SolidFill } from "@arction/lcjs"
 
 const flatDarkTheme = makeLightningChartThemeFlat({

@@ -1,6 +1,6 @@
 {
   
-  "name": "@arction/themes",
+  "name": "@arction/lcjs-themes",
   "version": "1.0.0",
   "description": "Open-source Themes package for LightningChart JS",
   "keywords": [
@@ -75,26 +75,26 @@
   "license": "SEE LICENSE IN LICENSE",
   "author": "LightningChart Ltd.",
   "files": [
-      "dist/themes.d.ts",
-      "dist/themes.iife.js",
-      "dist/themes.js",
-      "dist/themes.cjs",
-      "dist/themes.mjs",
-      "dist/themes.esm.js",
-      "dist/themes.iife.es2019.js",
+      "dist/lcjs-themes.d.ts",
+      "dist/lcjs-themes.iife.js",
+      "dist/lcjs-themes.js",
+      "dist/lcjs-themes.cjs",
+      "dist/lcjs-themes.mjs",
+      "dist/lcjs-themes.esm.js",
+      "dist/lcjs-themes.iife.es2019.js",
       "LICENSE",
       "package.json"
   ],
-  "main": "dist/themes.js",
-  "types": "dist/themes.d.ts",
-  "module": "dist/themes.esm.js",
-  "iife": "dist/themes.iife.js",
+  "main": "dist/lcjs-themes.js",
+  "types": "dist/lcjs-themes.d.ts",
+  "module": "dist/lcjs-themes.esm.js",
+  "iife": "dist/lcjs-themes.iife.js",
   "exports": {
-      "import": "./dist/themes.mjs",
-      "require": "./dist/themes.cjs"
+      "import": "./dist/lcjs-themes.mjs",
+      "require": "./dist/lcjs-themes.cjs"
   },
   "scripts": {
-    "ts": "tsc -p ./tsconfig.json && tsc -p ./tsconfig.json --target ES5 --outDir temp/themes/es5",
+    "ts": "tsc -p ./tsconfig.json && tsc -p ./tsconfig.json --target ES5 --outDir temp/lcjs-themes/es5",
     "build": "npm run ts && rollup -c rollup.config.js",
     "package": "sh ./scripts/package.sh"
   },

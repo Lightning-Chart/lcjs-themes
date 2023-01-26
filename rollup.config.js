@@ -4,7 +4,7 @@ const rollupJson = require("@rollup/plugin-json");
 const rollupBabel = require("@rollup/plugin-babel");
 
 const rollupPlugins = (isEs5) => {
-  console.log([`temp/themes/${isEs5 ? "es5" : "es2019"}`, "node_modules"]);
+  console.log([`temp/lcjs-themes/${isEs5 ? "es5" : "es2019"}`, "node_modules"]);
   return [
     rollupCommonjs({
       // Remove "require('crypto')" and "require('buffer')"" from the bundle.
@@ -12,7 +12,7 @@ const rollupPlugins = (isEs5) => {
     }),
     rollupNodeResolve({
       moduleDirectories: [
-        // `temp/themes/${isEs5 ? "es5" : "es2019"}`,
+        // `temp/lcjs-themes/${isEs5 ? "es5" : "es2019"}`,
         "node_modules",
       ],
     }),
@@ -40,7 +40,7 @@ const onWarn = (warning, warn) => {
  */
 const config = [
   {
-    input: ["temp/themes/es5/index.js"],
+    input: ["temp/lcjs-themes/es5/index.js"],
     plugins: rollupPlugins(true),
     external: [
       "@arction/lcjs",
@@ -51,16 +51,16 @@ const config = [
     ],
     output: [
       {
-        file: "dist/themes.esm.js",
+        file: "dist/lcjs-themes.esm.js",
         format: "esm",
-        name: "themes",
+        name: "lcjsThemes",
         sourcemap: false,
         plugins: [],
       },
       {
-        file: "dist/themes.js",
+        file: "dist/lcjs-themes.js",
         format: "cjs",
-        name: "themes",
+        name: "lcjsThemes",
         sourcemap: false,
         plugins: [],
       },
@@ -68,14 +68,14 @@ const config = [
     onwarn: onWarn,
   },
   {
-    input: ["temp/themes/es5/index.js"],
+    input: ["temp/lcjs-themes/es5/index.js"],
     plugins: rollupPlugins(true),
     external: ["@arction/lcjs"],
     output: [
       {
-        file: "dist/themes.iife.js",
+        file: "dist/lcjs-themes.iife.js",
         format: "iife",
-        name: "themes",
+        name: "lcjsThemes",
         sourcemap: false,
         plugins: [],
         globals: { "@arction/lcjs": "lcjs" },
@@ -84,7 +84,7 @@ const config = [
     onwarn: onWarn,
   },
   {
-    input: ["temp/themes/es2019/index.js"],
+    input: ["temp/lcjs-themes/es2019/index.js"],
     plugins: rollupPlugins(false),
     external: [
       "@arction/lcjs",
@@ -95,16 +95,16 @@ const config = [
     ],
     output: [
       {
-        file: "dist/themes.mjs",
+        file: "dist/lcjs-themes.mjs",
         format: "esm",
-        name: "themes",
+        name: "lcjsThemes",
         sourcemap: false,
         plugins: [],
       },
       {
-        file: "dist/themes.cjs",
+        file: "dist/lcjs-themes.cjs",
         format: "cjs",
-        name: "themes",
+        name: "lcjsThemes",
         sourcemap: false,
         plugins: [],
       },
@@ -112,14 +112,14 @@ const config = [
     onwarn: onWarn,
   },
   {
-    input: ["temp/themes/es2019/index.js"],
+    input: ["temp/lcjs-themes/es2019/index.js"],
     plugins: rollupPlugins(false),
     external: ["@arction/lcjs"],
     output: [
       {
-        file: "dist/themes.iife.es2019.js",
+        file: "dist/lcjs-themes.iife.es2019.js",
         format: "iife",
-        name: "themes",
+        name: "lcjsThemes",
         sourcemap: false,
         plugins: [],
         globals: { "@arction/lcjs": "lcjs" },

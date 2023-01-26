@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useEffect } from "react";
 import { lightningChart, ColorHEX } from "@arction/lcjs";
-import { makeLightningChartThemeFlat } from "@arction/themes";
+import { makeLightningChartThemeFlat } from "@arction/lcjs-themes";
 
 function App() {
   const flatDarkTheme = makeLightningChartThemeFlat({

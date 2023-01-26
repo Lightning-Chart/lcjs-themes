@@ -1,7 +1,7 @@
 const { lightningChart, renderToPNG } = require("@arction/lcjs-headless");
 const { PNG } = require("pngjs");
 const { ColorHEX } = require("@arction/lcjs");
-const { makeLightningChartThemeFlat } = require("@arction/themes");
+const { makeLightningChartThemeFlat } = require("@arction/lcjs-themes");
 const fs = require("fs");
 
 const flatDarkTheme = makeLightningChartThemeFlat({
