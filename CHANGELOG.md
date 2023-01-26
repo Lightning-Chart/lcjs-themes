@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `makeLightningChartThemeFlat`
+    - Function that takes a handful of colors as input and produces a flat LightningChart JS Theme.
+    - At this time, mainly tested with dark color themes and most frequently used LightningChart features.
+
 ### Changed
 
 ### Removed
