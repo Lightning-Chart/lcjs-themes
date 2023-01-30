@@ -4,7 +4,7 @@ const rollupJson = require("@rollup/plugin-json");
 const rollupBabel = require("@rollup/plugin-babel");
 
 const rollupPlugins = (isEs5) => {
-  console.log([`temp/lcjs-themes/${isEs5 ? "es5" : "es2019"}`, "node_modules"]);
+  console.log([`temp/${isEs5 ? "es5" : "es2019"}`, "node_modules"]);
   return [
     rollupCommonjs({
       // Remove "require('crypto')" and "require('buffer')"" from the bundle.
@@ -12,7 +12,6 @@ const rollupPlugins = (isEs5) => {
     }),
     rollupNodeResolve({
       moduleDirectories: [
-        // `temp/lcjs-themes/${isEs5 ? "es5" : "es2019"}`,
         "node_modules",
       ],
     }),
