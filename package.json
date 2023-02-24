@@ -36,7 +36,8 @@
     },
     "scripts": {
         "ts": "tsc -p ./tsconfig.json && tsc -p ./tsconfig.json --target ES5 --outDir temp/lcjs-themes/es5",
-        "build": "npm run ts && rollup -c rollup.config.js"
+        "build": "npm run ts && rollup -c rollup.config.js",
+        "deploy": "cd editor && npm i && npm run build && gh-pages -d build"
     },
     "dependencies": {
         "@arction/lcjs": "^4.0.0"
@@ -46,6 +47,7 @@
         "@rollup/plugin-commonjs": "^22.0.2",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^14.0.0",
+        "gh-pages": "^5.0.0",
         "rollup": "^2.77.0",
         "typescript": "4.8.4"
     }
