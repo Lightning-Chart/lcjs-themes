@@ -70,6 +70,15 @@ export type FlatThemeOptions = {
      * Color for Dashboard splitter lines.
      */
     dashboardSplitterColor?: Color
+
+    /**
+     * **Only needed for non-dark themes**
+     *
+     * Defaults to `true`.
+     *
+     * Switches some default assigned colors between values suitable for dark / light themes.
+     */
+    isDark?: boolean
 }
 
 /**
@@ -83,12 +92,12 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
     //
     //
     //
-    const isDark = true
+    const isDark = options.isDark !== undefined ? options.isDark : true
     const lcjsBackgroundFillStyle = new SolidFill({
         color: options.backgroundColor,
     })
-    const highlightColorOffset = ColorRGBA(60, 60, 60, 60)
-    const highlightColorOffsetAxisOverlay = ColorRGBA(255, 255, 255, 40)
+    const highlightColorOffset = isDark ? ColorRGBA(60, 60, 60, 60) : ColorRGBA(-60, -60, -60, 60)
+    const highlightColorOffsetAxisOverlay = isDark ? ColorRGBA(255, 255, 255, 40) : ColorRGBA(0, 0, 0, 40)
     const dashboardSplitterStyle = new SolidLine({
         thickness: 4,
         fillStyle: new SolidFill({
@@ -123,11 +132,11 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
     })
     const textFillStyle = new SolidFill({ color: options.textColor })
     const zoomRectangleFillStyle = new SolidFill({
-        color: ColorRGBA(255, 255, 255, 20),
+        color: isDark ? ColorRGBA(255, 255, 255, 20) : ColorRGBA(0, 0, 0, 20),
     })
     const zoomRectangleStrokeStyle = new SolidLine({
         thickness: 1,
-        fillStyle: whiteFillStyle,
+        fillStyle: isDark ? whiteFillStyle : blackFillStyle,
     })
     const primaryDataFillStyle = new SolidFill({ color: options.dataColors[0] })
     const dataSolidFillPalette = StylePalette(options.dataColors, (color) => new SolidFill({ color }))
@@ -200,12 +209,12 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
     })
     const cursorGridStrokeStyle = new SolidLine({
         thickness: 1,
-        fillStyle: whiteFillStyle,
+        fillStyle: isDark ? whiteFillStyle : blackFillStyle,
     })
     const bandFillStyle = zoomRectangleFillStyle
     const bandStrokeStyle = zoomRectangleStrokeStyle
     const constantLineStrokeStyle = cursorGridStrokeStyle
-    const uiButtonFillStyle = whiteFillStyle
+    const uiButtonFillStyle = isDark ? whiteFillStyle : blackFillStyle
     const uiBackgroundFillStyle = new SolidFill({
         color: options.uiBackgroundColor,
     })
@@ -249,11 +258,11 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         boxSeriesBodyStrokeStyle: emptyLine,
         boxSeriesStrokeStyle: new SolidLine({
             thickness: 1,
-            fillStyle: whiteFillStyle,
+            fillStyle: isDark ? whiteFillStyle : blackFillStyle,
         }),
         boxSeriesMedianStrokeStyle: new SolidLine({
             thickness: 1,
-            fillStyle: blackFillStyle,
+            fillStyle: isDark ? blackFillStyle : whiteFillStyle,
         }),
         ohlcCandleBodyFillStylePositive: dataFillStylePositive,
         ohlcCandleBodyFillStyleNegative: dataFillStyleNegative,
@@ -261,7 +270,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         ohlcCandleBodyStrokeStyleNegative: emptyLine,
         ohlcCandleStrokeStyle: new SolidLine({
             thickness: 1,
-            fillStyle: whiteFillStyle,
+            fillStyle: isDark ? whiteFillStyle : blackFillStyle,
         }),
         ohlcBarStrokeStylePositive: new SolidLine({
             thickness: 2,
@@ -383,7 +392,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         mapChartOutlierRegionFillStyle: emptyFill,
         mapChartOutlierRegionStrokeStyle: new SolidLine({
             thickness: 1,
-            fillStyle: whiteFillStyle,
+            fillStyle: isDark ? whiteFillStyle : blackFillStyle,
         }),
         mapChartSeparateRegionFillStyle: uiBackgroundFillStyle,
         mapChartSeparateRegionStrokeStyle: uiBackgroundStrokeStyle,
@@ -424,7 +433,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         spiderChartTitleFillStyle: textFillStyle,
         spiderChartSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
         spiderChartSeriesBackgroundStrokeStyle: emptyLine,
-        spiderChartWebStyle: uiBackgroundStrokeStyle,
+        spiderChartWebStyle: tickStyle.gridStrokeStyle,
         spiderChartScaleLabelFillStyle: textFillStyle,
         spiderChartScaleLabelFont: fontOther,
         spiderChartAxisLabelFillStyle: textFillStyle,
@@ -465,9 +474,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         gaugeChartBackgroundStrokeStyle: emptyLine,
         gaugeChartTitleFont: fontChartTitles,
         gaugeChartTitleFillStyle: textFillStyle,
-        gaugeChartEmptyGaugeFillStyle: new SolidFill({
-            color: ColorRGBA(30, 30, 30),
-        }),
+        gaugeChartEmptyGaugeFillStyle: isDark ? blackFillStyle : whiteFillStyle,
         gaugeChartEmptyGaugeStrokeStyle: uiBackgroundStrokeStyle,
         gaugeChartGaugeFillStyle: primaryDataFillStyle,
         gaugeChartIntervalLabelsFillStyle: textFillStyle,
@@ -502,8 +509,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         cursorResultTableTextFont: fontOther,
         cursorGridStrokeStyleX: cursorGridStrokeStyle,
         cursorGridStrokeStyleY: cursorGridStrokeStyle,
-
-        chartMarkerPointMarkerFillStyle: whiteFillStyle,
+        chartMarkerPointMarkerFillStyle: isDark ? whiteFillStyle : blackFillStyle,
         chartMarkerPointMarkerStrokeStyle: emptyLine,
     }
     return flatTheme
