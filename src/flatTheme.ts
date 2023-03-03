@@ -83,8 +83,16 @@ export type FlatThemeOptions = {
 
 /**
  * Factory function for creating a LightningChart JS Theme with a flat style based on very minimal configuration options.
+ *
+ * No-code interface for this factory can be found at https://arction.github.io/lcjs-themes/
+ *
+ * Pre-built versions generated using this factory can be found in this library:
+ *
+ * - `flatThemeDark` https://github.com/Arction/lcjs-themes/blob/main/src/flatThemeDark.ts
+ * - `flatThemeLight` https://github.com/Arction/lcjs-themes/blob/main/src/flatThemeLight.ts
+ *
  * @param   options - Configuration options for the created theme.
- * @returns
+ * @returns LightningChart JS `Theme` object.
  */
 export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
     const whiteFillStyle = new SolidFill({ color: ColorRGBA(255, 255, 255) })

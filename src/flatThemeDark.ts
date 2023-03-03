@@ -10,6 +10,11 @@ import { ColorHEX } from '@arction/lcjs'
  *
  *  const chart = lightningChart().ChartXY({ theme: flatThemeDark })
  * ```
+ *
+ * Make your own adjustments by:
+ * - Referencing source code at https://github.com/Arction/lcjs-themes/blob/main/src/flatThemeDark.ts
+ * - Using the online editor: https://arction.github.io/lcjs-themes/
+ *
  * @public
  */
 export const flatThemeDark = makeFlatTheme({

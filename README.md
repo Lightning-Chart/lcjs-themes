@@ -11,24 +11,35 @@ npm i @arction/lcjs-themes
 ```
 
 ```ts
-import { makeFlatTheme } from '@arction/lcjs-themes'
-import { ColorHEX, lightningChart, SolidFill } from '@arction/lcjs'
+// Using pre-built open-source themes
+import { flatThemeDark } from '@arction/lcjs-themes'
+import { lightningChart } from '@arction/lcjs'
 
-const flatDarkTheme = makeFlatTheme({
-    backgroundColor: ColorHEX('141619'),
-    textColor: ColorHEX('c5ced7'),
-    dataColors: [ColorHEX('e24d42')],
-    axisColor: ColorHEX('00000000'),
-    gridLineColor: ColorHEX('2c3235'),
-    uiBackgroundColor: ColorHEX('141619'),
-    uiBorderColor: ColorHEX('ffffff'),
-    fontFamily: 'Verdana',
+const chart = lightningChart().ChartXY({ theme: flatThemeDark })
+```
+
+```ts
+// Creating customized theme using open-source theme factories
+import { makeFlatTheme } from '@arction/lcjs-themes'
+import { lightningChart, ColorHEX } from '@arction/lcjs'
+
+const myCustomTheme = makeFlatTheme({
+    isDark: true,
+    fontFamily: 'Segoe UI, -apple-system, Verdana, Helvetica',
+    backgroundColor: ColorHEX('#181818ff'),
+    textColor: ColorHEX('#ffffc8ff'),
+    dataColors: [ColorHEX('#ffff5b'), ColorHEX('#ffcd5b'), ColorHEX('#ff9b5b')],
+    axisColor: ColorHEX('#00000000'),
+    gridLineColor: ColorHEX('#303030ff'),
+    uiBackgroundColor: ColorHEX('#161616ff'),
+    uiBorderColor: ColorHEX('#ffffff'),
+    dashboardSplitterColor: ColorHEX('#2d2d2dff'),
 })
 
-const chart = lightningChart().ChartXY({ theme: flatDarkTheme })
-chart.addLineSeries().addArrayY(new Array(10).fill(0).map((_) => Math.random()))
-chart.addLegendBox().add(chart)
+const chart = lightningChart().ChartXY({ theme: myCustomTheme })
 ```
+
+You can also use the included [no-code editor](https://arction.github.io/lcjs-themes/) for making custom themes without coding.
 
 See [CHANGELOG](https://github.com/Arction/lcjs-themes/blob/main/CHANGELOG.md) for latest additions to package contents.
 
@@ -55,9 +66,10 @@ Learn more about LightningChart JS [on our web site](https://lightningchart.com/
 `lcjs-themes` is used together with the main chart library [`@arction/lcjs`](https://www.npmjs.com/package/@arction/lcjs).
 Use the below support table to find what version of `lcjs-themes` is compatible with `lcjs`.
 
-| lcjs-themes | lcjs   |
-| ----------- | ------ |
-| 1.0.0       | ^4.0.0 |
+| lcjs           | lcjs-themes |
+| -------------- | ----------- |
+| ^4.0.0         | ^1.0.0      |
+| Anything older | No support  |
 
 ## Contribute
 
