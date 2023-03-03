@@ -96,15 +96,27 @@ const themeType = {
     },
     default: {
         isDark: true,
-        fontFamily: 'Verdana',
-        backgroundColor: '#141619',
-        textColor: '#c5ced7',
-        dataColors: ['#e24d42', '#1e00ff', '#0cfd08', '#eeff00'],
+        fontFamily: 'Segoe UI, -apple-system, Verdana, Helvetica',
+        backgroundColor: '#181818ff',
+        textColor: '#ffffc8ff',
+        dataColors: [
+            '#ffff5b',
+            '#ffcd5b',
+            '#ff9b5b',
+            '#ffc4bc',
+            '#ff94b8',
+            '#db94c6',
+            '#ebc4e0',
+            '#a994c6',
+            '#94e2c6',
+            '#94ffb0',
+            '#b4ffa5',
+        ],
         axisColor: '#00000000',
-        gridLineColor: '#2c3235',
-        uiBackgroundColor: '#141619',
+        gridLineColor: '#303030ff',
+        uiBackgroundColor: '#161616ff',
         uiBorderColor: '#ffffff',
-        dashboardSplitterColor: '#2c3235',
+        dashboardSplitterColor: '#2d2d2dff',
     },
 }
 
@@ -350,6 +362,8 @@ const exportCodeSnippetJS = (themeProperties) => {
                 ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
                 : type === 'fontFamily'
                 ? `"${value}"`
+                : type === 'boolean'
+                ? String(value)
                 : undefined
         snippet += `\t${key}: ${valueStr},\n`
     })
