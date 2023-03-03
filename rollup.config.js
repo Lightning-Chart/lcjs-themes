@@ -32,77 +32,42 @@ const onWarn = (warning, warn) => {
  */
 const config = [
     {
-        input: ['temp/lcjs-themes/es5/index.js'],
-        plugins: rollupPlugins(true),
-        external: ['@arction/lcjs', 'immutable', '@arction/eventer', 'earcut', /@babel\/runtime/],
-        output: [
-            {
-                file: 'dist/lcjs-themes.esm.js',
-                format: 'esm',
-                name: 'lcjsThemes',
-                sourcemap: false,
-                plugins: [],
-            },
-            {
-                file: 'dist/lcjs-themes.js',
-                format: 'cjs',
-                name: 'lcjsThemes',
-                sourcemap: false,
-                plugins: [],
-            },
-        ],
-        onwarn: onWarn,
-    },
-    {
-        input: ['temp/lcjs-themes/es5/index.js'],
+        input: ['temp/lcjs-themes/index.js'],
         plugins: rollupPlugins(true),
         external: ['@arction/lcjs'],
         output: [
             {
-                file: 'dist/lcjs-themes.iife.js',
+                file: 'dist/iife/lcjs-themes.iife.js',
                 format: 'iife',
                 name: 'lcjsThemes',
                 sourcemap: false,
                 plugins: [],
                 globals: { '@arction/lcjs': 'lcjs' },
+                preserveModules: false,
             },
         ],
         onwarn: onWarn,
     },
     {
-        input: ['temp/lcjs-themes/es2019/index.js'],
+        input: ['temp/lcjs-themes/index.js'],
         plugins: rollupPlugins(false),
         external: ['@arction/lcjs', 'immutable', '@arction/eventer', 'earcut', /@babel\/runtime/],
         output: [
             {
-                file: 'dist/lcjs-themes.mjs',
+                dir: 'dist/mjs/',
                 format: 'esm',
                 name: 'lcjsThemes',
                 sourcemap: false,
                 plugins: [],
+                preserveModules: true,
             },
             {
-                file: 'dist/lcjs-themes.cjs',
+                dir: 'dist/cjs/',
                 format: 'cjs',
                 name: 'lcjsThemes',
                 sourcemap: false,
                 plugins: [],
-            },
-        ],
-        onwarn: onWarn,
-    },
-    {
-        input: ['temp/lcjs-themes/es2019/index.js'],
-        plugins: rollupPlugins(false),
-        external: ['@arction/lcjs'],
-        output: [
-            {
-                file: 'dist/lcjs-themes.iife.es2019.js',
-                format: 'iife',
-                name: 'lcjsThemes',
-                sourcemap: false,
-                plugins: [],
-                globals: { '@arction/lcjs': 'lcjs' },
+                preserveModules: true,
             },
         ],
         onwarn: onWarn,

@@ -11,32 +11,23 @@
     "license": "MIT",
     "author": "LightningChart Ltd.",
     "files": [
-        "dist/lcjs-themes.iife.js",
-        "dist/lcjs-themes.js",
-        "dist/lcjs-themes.cjs",
-        "dist/lcjs-themes.mjs",
-        "dist/lcjs-themes.esm.js",
-        "dist/lcjs-themes.iife.es2019.js",
-        "dist/lcjs-themes.d.ts",
-        "dist/flatTheme.d.ts",
+        "dist/**/*.js|.cjs.mjs|.d.ts",
         "LICENSE",
         "README.md",
-        "package.json"
+        "package.json",
+        "CHANGELOG.md"
     ],
-    "main": "dist/lcjs-themes.js",
-    "types": "dist/lcjs-themes.d.ts",
-    "module": "dist/lcjs-themes.esm.js",
-    "iife": "dist/lcjs-themes.iife.js",
-    "exports": {
-        "import": "./dist/lcjs-themes.mjs",
-        "require": "./dist/lcjs-themes.cjs"
-    },
+    "main": "dist/mjs/index.js",
+    "types": "dist/types/index.d.ts",
+    "iife": "dist/iife/lcjs-themes.iife.js",
     "engines": {
         "node": ">=12"
     },
     "scripts": {
-        "ts": "tsc -p ./tsconfig.json && tsc -p ./tsconfig.json --target ES5 --outDir temp/lcjs-themes/es5",
-        "build": "npm run ts && rollup -c rollup.config.js",
+        "ts": "shx rm -r temp && tsc -p ./tsconfig.json",
+        "build": "shx rm -r dist && npm run ts && rollup -c rollup.config.js && npm run build:types",
+        "build:types": "shx mkdir dist/types && shx cp temp/lcjs-themes/*.d.ts dist/types/",
+        "package": "npm run build && sh ./release/package.sh",
         "deploy": "cd editor && npm i && npm run build && gh-pages -d build"
     },
     "dependencies": {
@@ -49,6 +40,7 @@
         "@rollup/plugin-node-resolve": "^14.0.0",
         "gh-pages": "^5.0.0",
         "rollup": "^2.77.0",
+        "shx": "^0.3.4",
         "typescript": "4.8.4"
     }
 }

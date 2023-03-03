@@ -1,7 +1,7 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "target": "ES2019",
+        "target": "ES5",
         "module": "ES6",
         "incremental": true,
         "tsBuildInfoFile": "temp/lcjs-themes/tsconfig.tsbuildinfo",
@@ -19,7 +19,7 @@
         "moduleResolution": "node",
         "esModuleInterop": true,
         "lib": ["dom", "ES2015", "ES2016", "ES2017", "ES2018", "ES2019", "ES2020"],
-        "outDir": "temp/lcjs-themes/es2019"
+        "outDir": "temp/lcjs-themes"
     },
     "exclude": ["node_modules", "dist", "temp/lcjs-themes"]
 }
