@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 -   `FlatThemeOptions.isDark`
-    - Allows making light themes.
+    -   Allows making light themes.
+-   `flatThemeDark`
+-   `flatThemeLight`
 
 ### Changed
 
