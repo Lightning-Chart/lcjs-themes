@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@arction/lcjs": "^4.0.2",
-    "@arction/lcjs-themes": "^1.0.0",
+    "@arction/lcjs-themes": "^1.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -41,7 +41,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "shx": "^0.3.4"
   },
   "homepage": "https://arction.github.io/lcjs-themes"
 }
