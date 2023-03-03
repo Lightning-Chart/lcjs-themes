@@ -1,0 +1,78 @@
+.App {
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: #141619;
+    color: white;
+    padding: 0px 0px 0px 20px;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.toolbar {
+    width: 20vw;
+}
+.toolbar-category {
+    text-align: left;
+    margin-bottom: 2em;
+}
+.toolbar-options {
+    font-size: 0.7em;
+    margin-left: 2em;
+    display: flex;
+    flex-direction: column;
+}
+.toolbar-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.chart-container {
+    flex-grow: 1;
+    margin: 10px;
+    border: solid 1px white;
+}
+#chart {
+    width: 100%;
+    height: 100%;
+}
+.color-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+.color-field {
+    width: 1em;
+    height: 1em;
+    padding: 0px;
+    border-width: 0px;
+}
+.font-field {
+    width: 8em;
+    height: 1em;
+    padding: 0px;
+    border-width: 0px;
+}
+.interactable {
+    cursor: pointer;
+}
+.interactable:hover {
+    font-weight: bold;
+}
+.colorPalette-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.colorPalette-add-or-subtract {
+    margin-left: 0.5em;
+}
+.colorPalette-colors {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 1px;
+}
