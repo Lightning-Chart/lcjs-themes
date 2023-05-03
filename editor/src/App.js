@@ -7,7 +7,7 @@ import { ReactComponent as ChartXYLogo } from './chartXYExample.svg'
 import { ReactComponent as Chart3DLogo } from './chart3DExample.svg'
 import { ReactComponent as DashboardLogo } from './dashboardExample.svg'
 import { ReactComponent as LCJSLogo } from './lcjs-logo.svg'
-import { ConfigProvider, Input, Select, Space, Switch } from 'antd'
+import { ConfigProvider, Input, Select, message, Switch } from 'antd'
 
 const examples = [
     {
@@ -144,6 +144,51 @@ const ExampleIcon = (props) => {
 function App() {
     const [themeProperties, setThemeProperties] = useState(themeType.default)
     const [example, setExample] = useState(examples[0])
+    const [messageApi, contextHolder] = message.useMessage()
+
+    const exportCodeSnippetJS = () => {
+        let snippet = `// import { makeFlatTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeFlatTheme({\n`
+        Object.entries(themeType.properties).forEach(([key, type]) => {
+            const value = themeProperties[key]
+            const valueStr =
+                type === 'color'
+                    ? `ColorHEX("${value}")`
+                    : type === 'colorPalette'
+                    ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
+                    : type === 'fontFamily'
+                    ? `"${value}"`
+                    : type === 'boolean'
+                    ? String(value)
+                    : undefined
+            snippet += `\t${key}: ${valueStr},\n`
+        })
+        snippet += `})`
+        snippet += `\n// const chart = lightningChart().ChartXY({ theme: myLCJSTheme })`
+
+        if (navigator.clipboard) {
+            navigator.clipboard
+                .writeText(snippet)
+                .then(() => {
+                    messageApi.open({
+                        type: 'success',
+                        content: `Copied code snippet to clip board. You can paste it into your application to use this theme.`,
+                    })
+                })
+                .catch((err) => {
+                    messageApi.open({
+                        type: 'error',
+                        content: `Couldn't write to clip board (${err}). Printing code snippet to console.`,
+                    })
+                    console.log(snippet)
+                })
+        } else {
+            messageApi.open({
+                type: 'error',
+                content: `Couldn't write to clip board. Printing code snippet to console.`,
+            })
+            console.log(snippet)
+        }
+    }
 
     useEffect(() => {
         const container = document.getElementById('chart')
@@ -180,6 +225,7 @@ function App() {
             }}
         >
             <div className="App">
+                {contextHolder}
                 <div className="toolbar">
                     <LCJSLogo className="lcjs-logo" />
                     <div className="toolbar-category toolbar-category-example">
@@ -226,10 +272,7 @@ function App() {
                     <hr />
                     <div className="toolbar-category">
                         <div className="toolbar-options">
-                            <span
-                                className="toolbar-option interactable js-snippet-export-button"
-                                onClick={() => exportCodeSnippetJS(themeProperties)}
-                            >
+                            <span className="toolbar-option interactable js-snippet-export-button" onClick={exportCodeSnippetJS}>
                                 JavaScript code snippet
                             </span>
                         </div>
@@ -452,36 +495,6 @@ const ThemePropertyFontFamily = (props) => {
             />
         </div>
     )
-}
-
-const exportCodeSnippetJS = (themeProperties) => {
-    let snippet = `// import { makeFlatTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeFlatTheme({\n`
-    Object.entries(themeType.properties).forEach(([key, type]) => {
-        const value = themeProperties[key]
-        const valueStr =
-            type === 'color'
-                ? `ColorHEX("${value}")`
-                : type === 'colorPalette'
-                ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
-                : type === 'fontFamily'
-                ? `"${value}"`
-                : type === 'boolean'
-                ? String(value)
-                : undefined
-        snippet += `\t${key}: ${valueStr},\n`
-    })
-    snippet += `})`
-    snippet += `\n// const chart = lightningChart().ChartXY({ theme: myLCJSTheme })`
-
-    navigator.clipboard
-        .writeText(snippet)
-        .then(() => {
-            alert(`Copied code snippet to clip board. You can paste it into your application to use this theme.`)
-        })
-        .catch((err) => {
-            alert(`Couldn't write to clip board (${err}). Printing code snippet to console.`)
-            console.log(snippet)
-        })
 }
 
 export default App
