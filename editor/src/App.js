@@ -1,12 +1,18 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useId, useRef } from 'react'
 import debounce from 'lodash.debounce'
 import { lightningChart, ColorHEX, AxisScrollStrategies } from '@arction/lcjs'
 import { makeFlatTheme } from '@arction/lcjs-themes'
+import { ReactComponent as ChartXYLogo } from './chartXYExample.svg'
+import { ReactComponent as Chart3DLogo } from './chart3DExample.svg'
+import { ReactComponent as DashboardLogo } from './dashboardExample.svg'
+import { ReactComponent as LCJSLogo } from './lcjs-logo.svg'
+import { ConfigProvider, Input, Select, message, Switch } from 'antd'
 
 const examples = [
     {
         name: 'Line Chart',
+        icon: 'chartXY',
         create: (container, theme) => {
             const chart = lightningChart().ChartXY({ container, theme })
             chart.addLineSeries().addArrayY([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2])
@@ -19,6 +25,7 @@ const examples = [
     },
     {
         name: 'Dashboard',
+        icon: 'dashboard',
         create: (container, theme) => {
             const dashboard = lightningChart().Dashboard({ container, theme, numberOfColumns: 2, numberOfRows: 2 })
             const xyChart = dashboard.createChartXY({ columnIndex: 0, rowIndex: 0 }).setTitle('')
@@ -62,6 +69,7 @@ const examples = [
     },
     {
         name: '3D Chart',
+        icon: 'chart3D',
         create: (container, theme) => {
             const chart = lightningChart().Chart3D({ container, theme })
             chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 0 })))
@@ -120,9 +128,67 @@ const themeType = {
     },
 }
 
+const ExampleIcon = (props) => {
+    switch (props.icon) {
+        case 'chartXY':
+            return <ChartXYLogo />
+        case 'chart3D':
+            return <Chart3DLogo />
+        case 'dashboard':
+            return <DashboardLogo />
+        default:
+            return null
+    }
+}
+
 function App() {
     const [themeProperties, setThemeProperties] = useState(themeType.default)
     const [example, setExample] = useState(examples[0])
+    const [messageApi, contextHolder] = message.useMessage()
+
+    const exportCodeSnippetJS = () => {
+        let snippet = `// import { makeFlatTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeFlatTheme({\n`
+        Object.entries(themeType.properties).forEach(([key, type]) => {
+            const value = themeProperties[key]
+            const valueStr =
+                type === 'color'
+                    ? `ColorHEX("${value}")`
+                    : type === 'colorPalette'
+                    ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
+                    : type === 'fontFamily'
+                    ? `"${value}"`
+                    : type === 'boolean'
+                    ? String(value)
+                    : undefined
+            snippet += `\t${key}: ${valueStr},\n`
+        })
+        snippet += `})`
+        snippet += `\n// const chart = lightningChart().ChartXY({ theme: myLCJSTheme })`
+
+        if (navigator.clipboard) {
+            navigator.clipboard
+                .writeText(snippet)
+                .then(() => {
+                    messageApi.open({
+                        type: 'success',
+                        content: `Copied code snippet to clip board. You can paste it into your application to use this theme.`,
+                    })
+                })
+                .catch((err) => {
+                    messageApi.open({
+                        type: 'error',
+                        content: `Couldn't write to clip board (${err}). Printing code snippet to console.`,
+                    })
+                    console.log(snippet)
+                })
+        } else {
+            messageApi.open({
+                type: 'error',
+                content: `Couldn't write to clip board. Printing code snippet to console.`,
+            })
+            console.log(snippet)
+        }
+    }
 
     useEffect(() => {
         const container = document.getElementById('chart')
@@ -151,61 +217,72 @@ function App() {
         return example.create(container, theme)
     }, [themeProperties, example])
     return (
-        <div className="App">
-            <div className="toolbar">
-                <div className="toolbar-category">
-                    <p>{themeType.name} properties</p>
-                    <div className="toolbar-options">
-                        {Object.entries(themeType.properties).map(([key, value], i) => (
-                            <ThemeProperty
-                                key={`property-${i}`}
-                                type={value}
-                                name={key}
-                                value={themeProperties[key]}
-                                applyValue={(newValue) => {
-                                    const newThemeProperties = { ...themeProperties }
-                                    newThemeProperties[key] = newValue
-                                    setThemeProperties(newThemeProperties)
-                                }}
-                            />
-                        ))}
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#C58E00',
+                },
+            }}
+        >
+            <div className="App">
+                {contextHolder}
+                <div className="toolbar">
+                    <LCJSLogo className="lcjs-logo" />
+                    <div className="toolbar-category toolbar-category-example">
+                        <p>Examples</p>
+                        <div className="toolbar-options toolbar-example-list">
+                            {examples.map((e, i) => (
+                                <div
+                                    key={e.name}
+                                    className={`example-icon${example.name === e.name ? ' example-icon-selected' : ''}`}
+                                    onClick={() => setExample(e)}
+                                >
+                                    <ExampleIcon icon={e.icon} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div className="toolbar-category">
-                    <p>Examples</p>
-                    <div className="toolbar-options">
-                        {examples.map((e, i) => (
-                            <span
-                                key={`example-${i}`}
-                                className="toolbar-option interactable"
-                                onClick={() => {
-                                    setExample(e)
-                                }}
-                            >
-                                {e.name}
+                    <hr />
+                    <div className="toolbar-category">
+                        <p>Theme properties</p>
+                        <div className="toolbar-options">
+                            {Object.entries(themeType.properties).map(([key, value], i) => (
+                                <ThemeProperty
+                                    key={`property-${i}`}
+                                    type={value}
+                                    name={key}
+                                    value={themeProperties[key]}
+                                    applyValue={(newValue) => {
+                                        const newThemeProperties = { ...themeProperties }
+                                        newThemeProperties[key] = newValue
+                                        setThemeProperties(newThemeProperties)
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <hr />
+                    <div className="toolbar-category">
+                        <p>Theme type</p>
+                        <div className="toolbar-options">
+                            <Select defaultValue={'flat'} options={[{ value: 'flat', label: 'Flat theme' }]} />
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <div className="toolbar-category">
+                        <div className="toolbar-options">
+                            <span className="toolbar-option interactable js-snippet-export-button" onClick={exportCodeSnippetJS}>
+                                JavaScript code snippet
                             </span>
-                        ))}
+                        </div>
                     </div>
                 </div>
-                <div className="toolbar-category">
-                    <p>Theme type</p>
-                    <div className="toolbar-options">
-                        <span className="toolbar-option interactable">Flat theme</span>
-                    </div>
-                </div>
-                <div className="toolbar-category">
-                    <p>Export</p>
-                    <div className="toolbar-options">
-                        <span className="toolbar-option interactable" onClick={() => exportCodeSnippetJS(themeProperties)}>
-                            JavaScript code snippet
-                        </span>
-                    </div>
+                <div className="chart-container">
+                    <div id="chart"></div>
                 </div>
             </div>
-            <div className="chart-container">
-                <div id="chart"></div>
-            </div>
-        </div>
+        </ConfigProvider>
     )
 }
 
@@ -224,21 +301,93 @@ const ThemeProperty = (props) => {
     )
 }
 
+const BooleanSelector = (props) => {
+    const id = useId()
+
+    const handleChange = (state) => {
+        if (props.onChange) {
+            props.onChange(state)
+        }
+    }
+
+    return (
+        <>
+            <label htmlFor={id}>{props.label}</label>
+            <Switch checkedChildren="I" defaultChecked={props.value || false} onChange={handleChange} style={{ marginRight: '42px' }} />
+        </>
+    )
+}
+
+const ColorSelector = (props) => {
+    const colorInputRef = useRef(null)
+    const [color, setColor] = useState(validateFormatHEXa(props.color || '#000'))
+
+    const handleColorChange = (event) => {
+        if (event.target.value) {
+            const newColor = event.target.value
+            setColor(newColor)
+            if (props.onColorChange) {
+                props.onColorChange(newColor)
+            }
+        }
+    }
+
+    const handleClick = () => {
+        if (colorInputRef.current) {
+            colorInputRef.current.focus()
+            colorInputRef.current.value = color.length > 7 ? color.slice(0, -2) : color
+            colorInputRef.current.click()
+        }
+    }
+
+    return (
+        <>
+            <div className="color-selector-balloon" style={{ backgroundColor: color }} onClick={handleClick}>
+                <input ref={colorInputRef} type="color" style={{ visibility: 'hidden' }} onChange={debounce(handleColorChange, 250)} />
+            </div>
+        </>
+    )
+}
+
+const BooleanSelectorWithColor = (props) => {
+    const id = useId()
+    const [color, setColor] = useState(validateFormatHEXa(props.color || '#000'))
+
+    const handleChange = (state) => {
+        if (props.onStateChange) {
+            props.onStateChange(state)
+        }
+    }
+
+    const handleColorChange = (color) => {
+        const newColor = color
+        setColor(newColor)
+        if (props.onColorChange) {
+            props.onColorChange(newColor)
+        }
+    }
+
+    return (
+        <>
+            <label htmlFor={id}>{props.label}</label>
+            <div className="color-controls">
+                <Switch id={id} checkedChildren="I" defaultChecked={props.value || false} onChange={handleChange} />
+                <ColorSelector color={color} onColorChange={handleColorChange} />
+            </div>
+        </>
+    )
+}
+
 const ThemePropertyBoolean = (props) => {
     const { name, applyValue } = props
-    const [enabled, setEnabled] = useState(props.value)
+
+    const handleChange = (state) => {
+        applyValue(state)
+    }
+
     return (
         <div className="toolbar-option">
-            {name}
-            <input
-                type="checkbox"
-                defaultChecked={enabled}
-                onChange={(event) => {
-                    const checked = event.target.checked
-                    setEnabled(checked)
-                    applyValue(checked)
-                }}
-            ></input>
+            <BooleanSelector label={name} value={props.value} onChange={handleChange} />
         </div>
     )
 }
@@ -250,31 +399,27 @@ const ThemePropertyColor = (props) => {
     const { name, applyValue } = props
     const [color, setColor] = useState(validateFormatHEXa(props.value))
     const hidden = color.slice(-2) === '00'
+
+    const handleStateChange = (state) => {
+        const newColor = `${validateFormatHEXa(color).slice(0, -2)}${state ? 'ff' : '00'}`
+        setColor(newColor)
+        applyValue(newColor)
+    }
+    const handleColorChange = (uColor) => {
+        const newColor = `${uColor}${!hidden ? 'ff' : '00'}`
+        setColor(newColor)
+        applyValue(newColor)
+    }
+
     return (
         <div className="toolbar-option">
-            {name}
-            <div className="color-controls">
-                <input
-                    type="checkbox"
-                    defaultChecked={!hidden}
-                    onChange={(event) => {
-                        const checked = event.target.checked
-                        const newColor = `${validateFormatHEXa(color).slice(0, -2)}${checked ? 'ff' : '00'}`
-                        setColor(newColor)
-                        applyValue(newColor)
-                    }}
-                ></input>
-                <input
-                    className="color-field"
-                    type="color"
-                    defaultValue={color.slice(0, -2)}
-                    onChange={debounce(function (event) {
-                        const newColor = `${event.target.value}${!hidden ? 'ff' : '00'}`
-                        setColor(newColor)
-                        applyValue(newColor)
-                    }, 250)}
-                ></input>
-            </div>
+            <BooleanSelectorWithColor
+                label={name}
+                value={!hidden}
+                color={color.slice(0, -2)}
+                onStateChange={handleStateChange}
+                onColorChange={handleColorChange}
+            />
         </div>
     )
 }
@@ -283,9 +428,9 @@ const ThemePropertyColorPalette = (props) => {
     const { name, applyValue } = props
     const [colors, setColors] = useState(props.value)
     return (
-        <div className="toolbar-option">
-            {name}
-            <div>
+        <div className="toolbar-option toolbar-option-colorPalette">
+            <div className="colorPalette-header">
+                <span>{name}</span>
                 <div className="colorPalette-controls">
                     <span
                         className="colorPalette-add-or-subtract interactable"
@@ -311,22 +456,21 @@ const ThemePropertyColorPalette = (props) => {
                         -
                     </span>
                 </div>
-                <div className="colorPalette-colors">
-                    {colors.map((color, i) => (
-                        <input
-                            key={`color-${i}`}
-                            className="color-field"
-                            type="color"
-                            defaultValue={color}
-                            onChange={debounce(function (event) {
-                                const newColors = colors.slice()
-                                newColors[i] = event.target.value
-                                setColors(newColors)
-                                applyValue(newColors)
-                            }, 250)}
-                        ></input>
-                    ))}
-                </div>
+            </div>
+            <div className="colorPalette-colors">
+                {colors.map((color, i) => (
+                    <ColorSelector
+                        className="color-field"
+                        key={`color-${i}`}
+                        color={color}
+                        onColorChange={debounce(function (nColor) {
+                            const newColors = colors.slice()
+                            newColors[i] = nColor
+                            setColors(newColors)
+                            applyValue(newColors)
+                        }, 250)}
+                    />
+                ))}
             </div>
         </div>
     )
@@ -335,50 +479,22 @@ const ThemePropertyColorPalette = (props) => {
 const ThemePropertyFontFamily = (props) => {
     const { name, applyValue } = props
     const [fontFamily, setFontFamily] = useState(props.value)
+    const id = useId()
     return (
         <div className="toolbar-option">
-            {name}
-            <input
-                className="font-field"
+            <label htmlFor={id}>{name}</label>
+            <Input
+                id={id}
                 type="text"
+                className="font-field"
                 defaultValue={fontFamily}
                 onChange={debounce(function (event) {
                     setFontFamily(event.target.value)
                     applyValue(event.target.value)
                 }, 250)}
-            ></input>
+            />
         </div>
     )
-}
-
-const exportCodeSnippetJS = (themeProperties) => {
-    let snippet = `// import { makeFlatTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeFlatTheme({\n`
-    Object.entries(themeType.properties).forEach(([key, type]) => {
-        const value = themeProperties[key]
-        const valueStr =
-            type === 'color'
-                ? `ColorHEX("${value}")`
-                : type === 'colorPalette'
-                ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
-                : type === 'fontFamily'
-                ? `"${value}"`
-                : type === 'boolean'
-                ? String(value)
-                : undefined
-        snippet += `\t${key}: ${valueStr},\n`
-    })
-    snippet += `})`
-    snippet += `\n// const chart = lightningChart().ChartXY({ theme: myLCJSTheme })`
-
-    navigator.clipboard
-        .writeText(snippet)
-        .then(() => {
-            alert(`Copied code snippet to clip board. You can paste it into your application to use this theme.`)
-        })
-        .catch((err) => {
-            alert(`Couldn't write to clip board (${err}). Printing code snippet to console.`)
-            console.log(snippet)
-        })
 }
 
 export default App

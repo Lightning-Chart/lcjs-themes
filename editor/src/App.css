@@ -4,30 +4,46 @@
     height: 100vh;
     display: flex;
     flex-direction: row;
-    background-color: #141619;
+    background-color: #24262d;
     color: white;
     padding: 0px 0px 0px 20px;
     box-sizing: border-box;
-    font-size: 1em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: Proxima Nova, Verdana, Geneva, Tahoma, sans-serif;
 }
 .toolbar {
-    width: 20vw;
+    width: 320px;
+    margin-left: 52px;
+    margin-right: 48px;
 }
 .toolbar-category {
     text-align: left;
-    margin-bottom: 2em;
+}
+.toolbar-category-example {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.toolbar-category p {
+    font-size: 20px;
 }
 .toolbar-options {
-    font-size: 0.7em;
-    margin-left: 2em;
+    font-size: 14px;
     display: flex;
     flex-direction: column;
+}
+.toolbar-example-list {
+    display: flex;
+    flex-direction: row;
 }
 .toolbar-option {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 11px;
+    align-items: baseline;
 }
 .chart-container {
     flex-grow: 1;
@@ -51,16 +67,16 @@
     border-width: 0px;
 }
 .font-field {
-    width: 8em;
-    height: 1em;
+    width: 86px;
     padding: 0px;
     border-width: 0px;
 }
+.font-field:focus {
+    width: 100%;
+    margin-left: 10px;
+}
 .interactable {
     cursor: pointer;
-}
-.interactable:hover {
-    font-weight: bold;
 }
 .colorPalette-controls {
     display: flex;
@@ -69,10 +85,80 @@
 }
 .colorPalette-add-or-subtract {
     margin-left: 0.5em;
+    color: #d9d9d9;
+    font-size: 18px;
 }
 .colorPalette-colors {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     margin-bottom: 1px;
+    flex-wrap: wrap;
+}
+.colorPalette-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: baseline;
+    width: 100%;
+}
+.color-selector-balloon {
+    border: 1px solid #454957;
+    border-radius: 100%;
+    width: 26px;
+    min-width: 26px;
+    height: 26px;
+    min-height: 26px;
+    margin-left: 14px;
+    cursor: pointer;
+}
+.colorPalette-colors .color-selector-balloon {
+    margin-left: 4px;
+}
+.lcjs-logo {
+    width: 323px;
+    height: 70px;
+    margin-top: 28px;
+}
+.toolbar-option-colorPalette {
+    display: flex;
+    flex-direction: column;
+}
+hr {
+    border: 1px solid #3e414b;
+}
+
+.example-icon {
+    width: 53px;
+    height: 53px;
+    border-radius: 8px;
+    display: flex;
+    margin: 10px;
+    cursor: pointer;
+}
+.example-icon-selected {
+    background: #3e414b;
+}
+
+.example-icon svg {
+    margin: auto;
+}
+.example-icon:last-child {
+    margin-right: 0;
+}
+.js-snippet-export-button {
+    margin-top: 32px;
+    width: 267px;
+    height: 45px;
+    background: #3e414b;
+    border-radius: 73px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
