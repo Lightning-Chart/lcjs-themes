@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect, useState, useId, useRef } from 'react'
+import { useEffect, useState, useId, useRef, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 import { lightningChart, ColorHEX, AxisScrollStrategies } from '@arction/lcjs'
 import { makeFlatTheme } from '@arction/lcjs-themes'
@@ -7,7 +7,10 @@ import { ReactComponent as ChartXYLogo } from './chartXYExample.svg'
 import { ReactComponent as Chart3DLogo } from './chart3DExample.svg'
 import { ReactComponent as DashboardLogo } from './dashboardExample.svg'
 import { ReactComponent as LCJSLogo } from './lcjs-logo.svg'
+import { ReactComponent as PlusLogo } from './plus.svg'
+import { ReactComponent as MinusLogo } from './minus.svg'
 import { ConfigProvider, Input, Select, message, Switch } from 'antd'
+import TextArea from 'antd/es/input/TextArea'
 
 const examples = [
     {
@@ -441,7 +444,7 @@ const ThemePropertyColorPalette = (props) => {
                             applyValue(newColors)
                         }}
                     >
-                        +
+                        <PlusLogo />
                     </span>
                     <span
                         className="colorPalette-add-or-subtract interactable"
@@ -453,7 +456,7 @@ const ThemePropertyColorPalette = (props) => {
                             applyValue(newColors)
                         }}
                     >
-                        -
+                        <MinusLogo />
                     </span>
                 </div>
             </div>
@@ -479,19 +482,38 @@ const ThemePropertyColorPalette = (props) => {
 const ThemePropertyFontFamily = (props) => {
     const { name, applyValue } = props
     const [fontFamily, setFontFamily] = useState(props.value)
+    const [value, setValue] = useState(fontFamily)
+    const [focus, setFocus] = useState(false)
     const id = useId()
+
+    const debouncedCallback = useCallback(
+        debounce(function (event) {
+            setFontFamily(event.target.value)
+            applyValue(event.target.value)
+            console.log('change')
+        }, 250),
+        [debounce, setFontFamily, applyValue],
+    )
+
+    const handleValueChange = (event) => {
+        setValue(event.target.value)
+        debouncedCallback(event)
+    }
+
+    const truncatedVal = value.length > 22 ? value.substr(0, 21) + '...' : value
+
     return (
-        <div className="toolbar-option">
+        <div className="toolbar-option toolbar-option-text">
             <label htmlFor={id}>{name}</label>
-            <Input
+            <TextArea
                 id={id}
                 type="text"
                 className="font-field"
-                defaultValue={fontFamily}
-                onChange={debounce(function (event) {
-                    setFontFamily(event.target.value)
-                    applyValue(event.target.value)
-                }, 250)}
+                rows={1}
+                value={focus ? value : truncatedVal}
+                onFocus={(e) => setFocus(true)}
+                onBlur={() => setFocus(false)}
+                onChange={handleValueChange}
             />
         </div>
     )
