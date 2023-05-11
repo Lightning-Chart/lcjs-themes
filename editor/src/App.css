@@ -1,7 +1,7 @@
 .App {
     text-align: center;
-    width: 100vw;
-    height: 100vh;
+    max-width: 100vw;
+    min-height: 100vh;
     display: flex;
     flex-direction: row;
     background-color: #24262d;
@@ -45,6 +45,9 @@
     margin-bottom: 11px;
     align-items: baseline;
 }
+.toolbar-option-text {
+    max-height: 22px;
+}
 .chart-container {
     flex-grow: 1;
     margin: 10px;
@@ -57,7 +60,7 @@
 .color-controls {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
 }
 .color-field {
@@ -67,13 +70,27 @@
     border-width: 0px;
 }
 .font-field {
-    width: 86px;
+    width: 148px;
     padding: 0px;
     border-width: 0px;
+    border: none;
+    text-decoration: none;
+    background: none;
+    color: #ffcc00;
+    overflow: hidden;
+    resize: none !important;
+    z-index: 1;
+    text-align: end;
 }
 .font-field:focus {
-    width: 100%;
+    width: 177px;
     margin-left: 10px;
+    height: 2.5lh;
+    overflow: auto;
+    color: #000;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
 }
 .interactable {
     cursor: pointer;
@@ -87,11 +104,16 @@
     margin-left: 0.5em;
     color: #d9d9d9;
     font-size: 18px;
+    display: flex;
+}
+.colorPalette-add-or-subtract svg {
+    margin: auto;
+    padding-top: 1px;
 }
 .colorPalette-colors {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-bottom: 1px;
     flex-wrap: wrap;
 }
@@ -114,7 +136,9 @@
     cursor: pointer;
 }
 .colorPalette-colors .color-selector-balloon {
-    margin-left: 4px;
+    margin-bottom: 4px;
+    margin-left: 0px;
+    margin-right: 7px;
 }
 .lcjs-logo {
     width: 323px;
