@@ -66,10 +66,11 @@ Learn more about LightningChart JS [on our web site](https://lightningchart.com/
 `lcjs-themes` is used together with the main chart library [`@arction/lcjs`](https://www.npmjs.com/package/@arction/lcjs).
 Use the below support table to find what version of `lcjs-themes` is compatible with `lcjs`.
 
-| lcjs           | lcjs-themes |
-| -------------- | ----------- |
-| ^4.0.0         | ^1.0.0      |
-| Anything older | No support  |
+| lcjs           | lcjs-themes   |
+| -------------- | ------------- |
+| ^4.1.0         | ^2.0.0        |
+| 4.0.0 - 4.0.2  | 1.0.0 - 1.1.0 |
+| Anything older | No support    |
 
 ## Contribute
 

@@ -14,6 +14,8 @@ import {
     SolidLine,
     Theme,
     transparentFill,
+    DashedLine,
+    StipplePatterns,
 } from '@arction/lcjs'
 
 const colorMissing = ColorRGBA(0, 255, 0)
@@ -215,13 +217,18 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         majorTickStyle: tickStyle,
         minorTickStyle: tickStyle,
     })
-    const cursorGridStrokeStyle = new SolidLine({
+    const cursorGridStrokeStyle = new DashedLine({
         thickness: 1,
         fillStyle: isDark ? whiteFillStyle : blackFillStyle,
+        pattern: StipplePatterns.DashedEqual,
+        patternScale: 3,
     })
     const bandFillStyle = zoomRectangleFillStyle
     const bandStrokeStyle = zoomRectangleStrokeStyle
-    const constantLineStrokeStyle = cursorGridStrokeStyle
+    const constantLineStrokeStyle = new SolidLine({
+        thickness: 1,
+        fillStyle: isDark ? whiteFillStyle : blackFillStyle,
+    })
     const uiButtonFillStyle = isDark ? whiteFillStyle : blackFillStyle
     const uiBackgroundFillStyle = new SolidFill({
         color: options.uiBackgroundColor,

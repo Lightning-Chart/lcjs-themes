@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.0.0] - 2023-05-23
+
+### Changed
+
+-   Cursor gridlines changed from solid to dashed. Requires `@arction/lcjs@^4.1.0`
+
 ## [1.1.0] - 2023-03-03
 
 ### Added
