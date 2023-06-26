@@ -16,6 +16,7 @@ import {
     transparentFill,
     DashedLine,
     StipplePatterns,
+    isVisibleTicks,
 } from '@arction/lcjs'
 
 const colorMissing = ColorRGBA(0, 255, 0)
@@ -345,29 +346,30 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         barChartValueAxisTitleFont: fontAxisTitles,
         barChartValueAxisTitleFillStyle: textFillStyle,
         barChartValueAxisStrokeStyle: axisStrokeStyle,
-        barChartValueAxisTicks: numericTickStrategy,
+        barChartValueAxisTicks: numericTickStrategy
+            .setMajorTickStyle((major) => major.setGridStrokeStyle(emptyLine))
+            .setMinorTickStyle((minor) => (!isVisibleTicks(minor) ? minor : minor.setGridStrokeStyle(emptyLine))),
         barChartCategoryAxisTitleFont: fontAxisTitles,
         barChartCategoryAxisTitleFillStyle: textFillStyle,
         barChartCategoryAxisStrokeStyle: axisStrokeStyle,
-        barChartLabelsBeforeBars: {
-            position: 'before-bar',
+        barChartCategoryLabels: {
             formatter: (bar, category, value) => category,
             labelFillStyle: numericTickStrategy.majorTickStyle.labelFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
-            labelMargin: numericTickStrategy.majorTickStyle.tickPadding,
+            labelMargin: 8,
             tickStyle: numericTickStrategy.majorTickStyle.tickStyle,
-            tickLength: numericTickStrategy.majorTickStyle.tickLength,
+            tickLength: 0,
         },
-        barChartLabelsAfterBars: {
+        barChartValueLabelsAfterBars: {
             position: 'after-bar',
-            formatter: (bar, category, value) => category,
+            formatter: (bar, category, value) => bar.chart.valueAxis.formatValue(value),
             labelFillStyle: numericTickStrategy.majorTickStyle.labelFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
-            labelMargin: numericTickStrategy.majorTickStyle.tickLength,
+            labelMargin: 8,
         },
-        barChartLabelsInsideBars: {
+        barChartValueLabelsInsideBars: {
             position: 'inside-bar',
-            formatter: (bar, category, value) => category,
+            formatter: (bar, category, value) => bar.chart.valueAxis.formatValue(value),
             labelFillStyle: isDark ? whiteFillStyle : blackFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
         },
