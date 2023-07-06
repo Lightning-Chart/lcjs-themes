@@ -359,6 +359,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
             labelMargin: 8,
             tickStyle: numericTickStrategy.majorTickStyle.tickStyle,
             tickLength: 0,
+            labelRotation: 0,
         },
         barChartValueLabelsAfterBars: {
             position: 'after-bar',
@@ -366,12 +367,15 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
             labelFillStyle: numericTickStrategy.majorTickStyle.labelFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
             labelMargin: 8,
+            labelRotation: 0,
         },
         barChartValueLabelsInsideBars: {
             position: 'inside-bar',
             formatter: (bar, category, value) => bar.chart.valueAxis.formatValue(value),
             labelFillStyle: isDark ? whiteFillStyle : blackFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
+            labelMargin: 8,
+            labelRotation: 0,
         },
         chart3DBackgroundFillStyle: chartBackgroundFillStyle,
         chart3DBackgroundStrokeStyle: emptyLine,
