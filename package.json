@@ -1,6 +1,6 @@
 {
     "name": "@arction/lcjs-themes",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Open-source Themes package for LightningChart JS",
     "keywords": [
         "Arction",
@@ -24,14 +24,14 @@
         "node": ">=12"
     },
     "scripts": {
-        "ts": "shx rm -r temp && tsc -p ./tsconfig.json",
+        "ts": "shx rm -r temp & tsc -p ./tsconfig.json",
         "build": "shx rm -r dist & npm run ts && rollup -c rollup.config.js && npm run build:types",
         "build:types": "shx mkdir dist/types && shx cp temp/lcjs-themes/*.d.ts dist/types/",
         "package": "npm run build && sh ./release/package.sh",
         "deploy": "cd editor && npm i && npm run build && gh-pages -d build --repo git@github.com:Arction/lcjs-themes.git"
     },
     "dependencies": {
-        "@arction/lcjs": "^4.1.0"
+        "@arction/lcjs": "^4.2.0"
     },
     "devDependencies": {
         "@rollup/plugin-babel": "^5.3.1",

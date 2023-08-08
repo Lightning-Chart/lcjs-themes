@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.1.0] - 2023-08-08
+
+### Added
+
+-   Flat Theme properties for Bar Chart introduced in `@arction/lcjs@4.2.0`
+
 ## [2.0.0] - 2023-05-23
 
 ### Changed

@@ -68,7 +68,8 @@ Use the below support table to find what version of `lcjs-themes` is compatible 
 
 | lcjs           | lcjs-themes   |
 | -------------- | ------------- |
-| ^4.1.0         | ^2.0.0        |
+| ^4.2.0         | ^2.1.0        |
+| 4.1.x          | 2.0.0         |
 | 4.0.0 - 4.0.2  | 1.0.0 - 1.1.0 |
 | Anything older | No support    |
 
