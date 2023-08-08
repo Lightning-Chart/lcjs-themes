@@ -30,7 +30,7 @@ const examples = [
         name: 'Dashboard',
         icon: 'dashboard',
         create: (container, theme) => {
-            const dashboard = lightningChart().Dashboard({ container, theme, numberOfColumns: 2, numberOfRows: 2 })
+            const dashboard = lightningChart().Dashboard({ container, theme, numberOfColumns: 2, numberOfRows: 4, rowSpan: 1 })
             const xyChart = dashboard.createChartXY({ columnIndex: 0, rowIndex: 0 }).setTitle('')
             const xySeries = xyChart
                 .addLineSeries({ dataPattern: { pattern: 'ProgressiveX' } })
@@ -43,7 +43,18 @@ const examples = [
                 .setScrollStrategy(AxisScrollStrategies.progressive)
                 .setInterval({ start: -1000, end: 0, stopAxisAfter: false })
 
-            const pie = dashboard.createPieChart({ columnIndex: 1, rowIndex: 0, rowSpan: 1 }).setTitle('')
+            const barChart = dashboard
+                .createBarChart({ columnIndex: 0, rowIndex: 1 })
+                .setTitle('')
+                .setData([
+                    { category: 'Category A', value: 4 },
+                    { category: 'Category B', value: 12 },
+                    { category: 'Category C', value: 5 },
+                    { category: 'Category D', value: 8 },
+                    { category: 'Category E', value: 2 },
+                ])
+
+            const pie = dashboard.createPieChart({ columnIndex: 1, rowIndex: 0, rowSpan: 2 }).setTitle('')
             ;[
                 { name: 'Category 1', value: 20 },
                 { name: 'Category 2', value: 5 },
@@ -51,7 +62,7 @@ const examples = [
                 { name: 'Category 4', value: 65 },
             ].forEach((item) => pie.addSlice(item.name, item.value))
 
-            const spider = dashboard.createSpiderChart({ columnIndex: 0, rowIndex: 1, columnSpan: 2 }).setTitle('')
+            const spider = dashboard.createSpiderChart({ columnIndex: 0, rowIndex: 2, columnSpan: 2, rowSpan: 2 }).setTitle('')
             spider
                 .addSeries()
                 .addPoints(
