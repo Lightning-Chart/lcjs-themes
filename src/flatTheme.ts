@@ -3,7 +3,6 @@ import {
     emptyTick,
     NumericTickStrategy,
     TimeTickStrategy,
-    VisibleTicks,
     Color,
     ColorRGBA,
     emptyFill,
@@ -16,7 +15,9 @@ import {
     transparentFill,
     DashedLine,
     StipplePatterns,
-    isVisibleTicks,
+    TickStyle,
+    PointShape,
+    ColorHEX,
 } from '@arction/lcjs'
 
 const colorMissing = ColorRGBA(0, 255, 0)
@@ -192,7 +193,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         fillStyle: new SolidFill({ color: options.axisColor }),
     })
     const axisOverlayStyle = new SolidFill({ color: ColorRGBA(0, 0, 0, 1) }) // NOTE: Slight opaqueness is required for this overlay becoming visible when highlighted.
-    const tickStyle = new VisibleTicks({
+    const tickStyle = new TickStyle({
         gridStrokeStyle: new SolidLine({
             thickness: 1,
             fillStyle: new SolidFill({ color: options.gridLineColor }),
@@ -231,6 +232,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         fillStyle: isDark ? whiteFillStyle : blackFillStyle,
     })
     const uiButtonFillStyle = isDark ? whiteFillStyle : blackFillStyle
+    const uiButtonFillStyleHidden = new SolidFill({ color: options.isDark ? ColorRGBA(70, 70, 70, 255) : ColorRGBA(170, 170, 170, 255) })
     const uiBackgroundFillStyle = new SolidFill({
         color: options.uiBackgroundColor,
     })
@@ -280,14 +282,18 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
             thickness: 1,
             fillStyle: isDark ? blackFillStyle : whiteFillStyle,
         }),
+        ohlcCandleThicknessPixels: 5,
         ohlcCandleBodyFillStylePositive: dataFillStylePositive,
         ohlcCandleBodyFillStyleNegative: dataFillStyleNegative,
-        ohlcCandleBodyStrokeStylePositive: emptyLine,
-        ohlcCandleBodyStrokeStyleNegative: emptyLine,
-        ohlcCandleStrokeStyle: new SolidLine({
+        ohlcCandleTailStrokeStylePositive: new SolidLine({
             thickness: 1,
             fillStyle: isDark ? whiteFillStyle : blackFillStyle,
         }),
+        ohlcCandleTailStrokeStyleNegative: new SolidLine({
+            thickness: 1,
+            fillStyle: isDark ? whiteFillStyle : blackFillStyle,
+        }),
+        ohlcBarThicknessPixels: 10,
         ohlcBarStrokeStylePositive: new SolidLine({
             thickness: 2,
             fillStyle: dataFillStylePositive,
@@ -348,7 +354,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         barChartValueAxisStrokeStyle: axisStrokeStyle,
         barChartValueAxisTicks: numericTickStrategy
             .setMajorTickStyle((major) => major.setGridStrokeStyle(emptyLine))
-            .setMinorTickStyle((minor) => (!isVisibleTicks(minor) ? minor : minor.setGridStrokeStyle(emptyLine))),
+            .setMinorTickStyle((minor) => minor.setGridStrokeStyle(emptyLine)),
         barChartCategoryAxisTitleFont: fontAxisTitles,
         barChartCategoryAxisTitleFillStyle: textFillStyle,
         barChartCategoryAxisStrokeStyle: axisStrokeStyle,
@@ -438,6 +444,16 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         polarPolygonSeriesStrokeStyle: dataBorderStrokePalette,
         polarAreaSeriesFillStyle: areaSeriesFillStylePalette,
         polarAreaSeriesStrokeStyle: dataBorderStrokePalette,
+        polarHeatmapSeriesFillStyle: seriesFillStylePalette,
+        zoomBandChartDefocusOverlayFillStyle: new SolidFill({
+            color: options.isDark ? ColorRGBA(0, 0, 0, 180) : ColorRGBA(255, 255, 255, 180),
+        }),
+        zoomBandChartSplitterStrokeStyle: new SolidLine({
+            thickness: 2,
+            fillStyle: options.isDark ? whiteFillStyle : blackFillStyle,
+        }),
+        zoomBandChartKnobSize: { x: 11, y: 19 },
+        zoomBandChartKnobFillStyle: options.isDark ? whiteFillStyle : blackFillStyle,
         mapChartBackgroundFillStyle: chartBackgroundFillStyle,
         mapChartBackgroundStrokeStyle: emptyLine,
         mapChartTitleFont: fontChartTitles,
@@ -543,11 +559,13 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         uiPanelBackgroundStrokeStyle: emptyLine,
         onScreenMenuBackgroundColor: ColorRGBA(254, 204, 0, 0.7),
         uiButtonFillStyle,
+        uiButtonFillStyleHidden,
         uiButtonStrokeStyle: uiBackgroundStrokeStyle,
         uiButtonSize: 10,
         uiBackgroundFillStyle,
         uiBackgroundStrokeStyle,
         uiTextFillStyle: textFillStyle,
+        uiTextFillStyleHidden: new SolidFill({ color: options.isDark ? ColorRGBA(70, 70, 70, 255) : ColorRGBA(170, 170, 170, 255) }),
         uiTextFont: fontOther,
         legendTitleFillStyle: textFillStyle,
         legendTitleFont: fontLegendTitle,
@@ -559,8 +577,9 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         cursorTickMarkerYBackgroundStrokeStyle: uiBackgroundStrokeStyle,
         cursorTickMarkerYTextFillStyle: textFillStyle,
         cursorTickMarkerYTextFont: fontOther,
-        cursorPointMarkerFillStyle: emptyFill,
-        cursorPointMarkerStrokeStyle: emptyLine,
+        cursorPointMarkerSize: { x: 9, y: 9 },
+        cursorPointMarkerShape: PointShape.Cross,
+        cursorPointMarkerFillStyle: cursorGridStrokeStyle.getFillStyle(),
         cursorResultTableFillStyle: uiBackgroundFillStyle,
         cursorResultTableStrokeStyle: uiBackgroundStrokeStyle,
         cursorResultTableTextFillStyle: textFillStyle,
@@ -568,7 +587,11 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         cursorGridStrokeStyleX: cursorGridStrokeStyle,
         cursorGridStrokeStyleY: cursorGridStrokeStyle,
         chartMarkerPointMarkerFillStyle: isDark ? whiteFillStyle : blackFillStyle,
-        chartMarkerPointMarkerStrokeStyle: emptyLine,
+        chartMarkerPointMarkerSize: { x: 20, y: 20 },
+        chartMarkerPointMarkerShape: PointShape.Star,
+        seriesMarkerPointMarkerFillStyle: isDark ? whiteFillStyle : blackFillStyle,
+        seriesMarkerPointMarkerSize: { x: 9, y: 9 },
+        seriesMarkerPointMarkerShape: PointShape.Cross,
     }
     return flatTheme
 }

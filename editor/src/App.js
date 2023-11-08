@@ -9,15 +9,18 @@ import { ReactComponent as DashboardLogo } from './dashboardExample.svg'
 import { ReactComponent as LCJSLogo } from './lcjs-logo.svg'
 import { ReactComponent as PlusLogo } from './plus.svg'
 import { ReactComponent as MinusLogo } from './minus.svg'
-import { ConfigProvider, Input, Select, message, Switch } from 'antd'
+import { ConfigProvider, Select, message, Switch } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
+
+// https://lightningchart.com/js-charts
+const lcLicenseKey = 'my-license-key'
 
 const examples = [
     {
         name: 'Line Chart',
         icon: 'chartXY',
-        create: (container, theme) => {
-            const chart = lightningChart().ChartXY({ container, theme })
+        create: (lc, container, theme) => {
+            const chart = lc.ChartXY({ container, theme })
             chart.addLineSeries().addArrayY([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2])
             chart.forEachAxis((axis) => axis.fit())
             chart.addLegendBox().add(chart)
@@ -29,8 +32,8 @@ const examples = [
     {
         name: 'Dashboard',
         icon: 'dashboard',
-        create: (container, theme) => {
-            const dashboard = lightningChart().Dashboard({ container, theme, numberOfColumns: 2, numberOfRows: 4, rowSpan: 1 })
+        create: (lc, container, theme) => {
+            const dashboard = lc.Dashboard({ container, theme, numberOfColumns: 2, numberOfRows: 4, rowSpan: 1 })
             const xyChart = dashboard.createChartXY({ columnIndex: 0, rowIndex: 0 }).setTitle('')
             const xySeries = xyChart
                 .addLineSeries({ dataPattern: { pattern: 'ProgressiveX' } })
@@ -84,8 +87,8 @@ const examples = [
     {
         name: '3D Chart',
         icon: 'chart3D',
-        create: (container, theme) => {
-            const chart = lightningChart().Chart3D({ container, theme })
+        create: (lc, container, theme) => {
+            const chart = lc.Chart3D({ container, theme })
             chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 0 })))
             chart.addLineSeries().add([3, 2.6, 3, 4, 6.2, 3, 2.2, 3, 4, 3.5, 6, 5, 4, 5].map((y, i) => ({ x: i, y, z: 1 })))
             chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 2 })))
@@ -228,7 +231,12 @@ function App() {
         )
 
         const theme = makeFlatTheme(themeConfiguration)
-        return example.create(container, theme)
+        const lc = lightningChart({ license: lcLicenseKey })
+        const cleanupExample = example.create(lc, container, theme)
+        return () => {
+            cleanupExample()
+            lc.dispose()
+        }
     }, [themeProperties, example])
     return (
         <ConfigProvider
