@@ -1,23 +1,22 @@
 import {
-    DateTimeTickStrategy,
-    emptyTick,
-    NumericTickStrategy,
-    TimeTickStrategy,
     Color,
     ColorRGBA,
-    emptyFill,
-    emptyLine,
+    DashedLine,
+    DateTimeTickStrategy,
     FontSettings,
+    NumericTickStrategy,
+    PointShape,
     PointStyle3D,
     SolidFill,
     SolidLine,
-    Theme,
-    transparentFill,
-    DashedLine,
     StipplePatterns,
+    Theme,
     TickStyle,
-    PointShape,
-    ColorHEX,
+    TimeTickStrategy,
+    emptyFill,
+    emptyLine,
+    emptyTick,
+    transparentFill,
 } from '@arction/lcjs'
 
 const colorMissing = ColorRGBA(0, 255, 0)
@@ -65,6 +64,13 @@ export type FlatThemeOptions = {
      * Font family of all text. Same as CSS `font-family`.
      */
     fontFamily: string
+
+    fontSize?: {
+        chartTitle: number
+        axisTitle: number
+        lengendTitle: number
+        other: number
+    }
 
     // ----- Feature specific properties (should be kept optional) -----
 
@@ -119,25 +125,25 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
     const chartBackgroundFillStyle = lcjsBackgroundFillStyle
     const seriesBackgroundFillStyle = transparentFill
     const fontChartTitles = new FontSettings({
-        size: 18,
+        size: options.fontSize?.chartTitle ?? 18,
         family: options.fontFamily,
         weight: 'normal',
         style: 'normal',
     })
     const fontAxisTitles = new FontSettings({
-        size: 16,
+        size: options.fontSize?.axisTitle ?? 16,
         family: options.fontFamily,
         weight: 'normal',
         style: 'normal',
     })
     const fontLegendTitle = new FontSettings({
-        size: 14,
+        size: options.fontSize?.lengendTitle ?? 14,
         family: options.fontFamily,
         weight: 'normal',
         style: 'normal',
     })
     const fontOther = new FontSettings({
-        size: 14,
+        size: options.fontSize?.other ?? 14,
         family: options.fontFamily,
         weight: 'normal',
         style: 'normal',
