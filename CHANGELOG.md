@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+-   Optional `fontSize` property to `FlatThemeOptions`
+    -   Can be used to override default font sizes by chart title, axis title, legend title and all other fonts.
+
 ## [3.0.0] - 2023-11-08
 
 ### Added
