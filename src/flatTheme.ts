@@ -68,7 +68,7 @@ export type FlatThemeOptions = {
     fontSize?: {
         chartTitle: number
         axisTitle: number
-        lengendTitle: number
+        legendTitle: number
         other: number
     }
 
@@ -137,7 +137,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         style: 'normal',
     })
     const fontLegendTitle = new FontSettings({
-        size: options.fontSize?.lengendTitle ?? 14,
+        size: options.fontSize?.legendTitle ?? 14,
         family: options.fontFamily,
         weight: 'normal',
         style: 'normal',
