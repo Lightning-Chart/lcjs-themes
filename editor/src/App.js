@@ -93,9 +93,6 @@ const examples = [
             chart.addLineSeries().add([3, 2.6, 3, 4, 6.2, 3, 2.2, 3, 4, 3.5, 6, 5, 4, 5].map((y, i) => ({ x: i, y, z: 1 })))
             chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 2 })))
             chart.getDefaultAxisX().fit()
-            chart.getDefaultAxisY().fit()
-            const yInterval = chart.getDefaultAxisY().getInterval()
-            chart.getDefaultAxisY().setInterval({ start: yInterval.start, end: yInterval.start + 2 * (yInterval.end - yInterval.start) })
             chart.getDefaultAxisZ().setInterval({ start: -0.5, end: 2.5 })
             chart.addLegendBox().add(chart)
             return () => {
