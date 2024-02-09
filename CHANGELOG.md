@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [3.1.0] - 2024-02-09
+
 ### Added
 
+-   Support for `@arction/lcjs@5.1.x`
+    -   BarChart crashed
 -   Optional `fontSize` property to `FlatThemeOptions`
     -   Can be used to override default font sizes by chart title, axis title, legend title and all other fonts.
 
