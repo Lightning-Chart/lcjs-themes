@@ -365,7 +365,7 @@ export const makeFlatTheme = (options: FlatThemeOptions): Theme => {
         barChartCategoryAxisTitleFillStyle: textFillStyle,
         barChartCategoryAxisStrokeStyle: axisStrokeStyle,
         barChartCategoryLabels: {
-            formatter: (bar, category, value) => category,
+            formatter: (category, categoryValuesTotal) => category,
             labelFillStyle: numericTickStrategy.majorTickStyle.labelFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
             labelMargin: 8,
