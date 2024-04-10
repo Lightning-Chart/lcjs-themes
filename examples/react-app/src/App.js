@@ -2,10 +2,10 @@ import logo from './logo.svg'
 import './App.css'
 import { useEffect } from 'react'
 import { lightningChart, ColorHEX } from '@arction/lcjs'
-import { makeFlatTheme } from '@arction/lcjs-themes'
+import { makeCustomTheme } from '@arction/lcjs-themes'
 
 function App() {
-    const flatDarkTheme = makeFlatTheme({
+    const flatDarkTheme = makeCustomTheme({
         backgroundColor: ColorHEX('141619'),
         textColor: ColorHEX('c5ced7'),
         dataColors: [ColorHEX('e24d42')],

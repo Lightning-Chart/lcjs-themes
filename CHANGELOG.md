@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [3.1.0] - 2024-10-04
+
+### Added
+
+- `makeCustomTheme`
+    - Same as previous `makeFlatTheme` but allows enabling automatic gradients and effects for dark themes. These give much more depth to the generated themes.
+- `presetThemeDark`, preset example of new non-flat themes created with `makeCustomTheme`
+
+### Deprecated
+
+- Deprecated `makeFlatTheme` over `makeCustomTheme`.
+    - `makeFlatTheme` still works but exists only for backwards compatibility reasons.
+
 ## [3.1.0] - 2024-02-09
 
 ### Added

@@ -20,10 +20,10 @@ const chart = lightningChart().ChartXY({ theme: flatThemeDark })
 
 ```ts
 // Creating customized theme using open-source theme factories
-import { makeFlatTheme } from '@arction/lcjs-themes'
+import { makeCustomTheme } from '@arction/lcjs-themes'
 import { lightningChart, ColorHEX } from '@arction/lcjs'
 
-const myCustomTheme = makeFlatTheme({
+const myCustomTheme = makeCustomTheme({
     isDark: true,
     fontFamily: 'Segoe UI, -apple-system, Verdana, Helvetica',
     backgroundColor: ColorHEX('#181818ff'),

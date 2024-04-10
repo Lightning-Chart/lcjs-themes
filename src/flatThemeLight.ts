@@ -1,8 +1,8 @@
-import { makeFlatTheme } from './flatTheme'
+import { makeCustomTheme } from './customTheme'
 import { ColorHEX } from '@arction/lcjs'
 
 /**
- * Adaptation of `Themes.light` from `@arction/lcjs` using `makeFlatTheme` factory.
+ * Adaptation of `Themes.light` from `@arction/lcjs` using `makeCustomTheme` factory.
  *
  * ```ts
  *  // Example use
@@ -12,13 +12,15 @@ import { ColorHEX } from '@arction/lcjs'
  * ```
  *
  * Make your own adjustments by:
- * - Referencing source code at https://github.com/Arction/lcjs-themes/blob/main/src/flatThemeDark.ts
+ * - Referencing source code at https://github.com/Arction/lcjs-themes/blob/main/src/flatThemeLight.ts
  * - Using the online editor: https://arction.github.io/lcjs-themes/
  *
  * @public
  */
-export const flatThemeLight = makeFlatTheme({
+export const flatThemeLight = makeCustomTheme({
     isDark: false,
+    gradients: false,
+    effects: false,
     fontFamily: 'Segoe UI, -apple-system, Verdana, Helvetica',
     backgroundColor: ColorHEX('#ffffffff'),
     textColor: ColorHEX('#212b31ff'),

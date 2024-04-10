@@ -2,7 +2,7 @@ import './App.css'
 import { useEffect, useState, useId, useRef, useCallback } from 'react'
 import debounce from 'lodash.debounce'
 import { lightningChart, ColorHEX, AxisScrollStrategies } from '@arction/lcjs'
-import { makeFlatTheme } from '@arction/lcjs-themes'
+import { makeCustomTheme } from '@arction/lcjs-themes'
 import { ReactComponent as ChartXYLogo } from './chartXYExample.svg'
 import { ReactComponent as Chart3DLogo } from './chart3DExample.svg'
 import { ReactComponent as DashboardLogo } from './dashboardExample.svg'
@@ -106,6 +106,8 @@ const themeType = {
     name: 'Flat theme',
     properties: {
         isDark: 'boolean',
+        gradients: 'boolean',
+        effects: 'boolean',
         fontFamily: 'fontFamily',
         backgroundColor: 'color',
         textColor: 'color',
@@ -118,6 +120,8 @@ const themeType = {
     },
     default: {
         isDark: true,
+        gradients: true,
+        effects: true,
         fontFamily: 'Segoe UI, -apple-system, Verdana, Helvetica',
         backgroundColor: '#181818ff',
         textColor: '#ffffc8ff',
@@ -161,7 +165,7 @@ function App() {
     const [messageApi, contextHolder] = message.useMessage()
 
     const exportCodeSnippetJS = () => {
-        let snippet = `// import { makeFlatTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeFlatTheme({\n`
+        let snippet = `// import { makeCustomTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeCustomTheme({\n`
         Object.entries(themeType.properties).forEach(([key, type]) => {
             const value = themeProperties[key]
             const valueStr =
@@ -227,7 +231,7 @@ function App() {
             }),
         )
 
-        const theme = makeFlatTheme(themeConfiguration)
+        const theme = makeCustomTheme(themeConfiguration)
         const lc = lightningChart({ license: lcLicenseKey })
         const cleanupExample = example.create(lc, container, theme)
         return () => {

@@ -2,25 +2,25 @@ import { makeCustomTheme } from './customTheme'
 import { ColorHEX } from '@arction/lcjs'
 
 /**
- * Adaptation of a flat dark theme using `makeCustomTheme` factory.
+ * A dark theme created using `makeCustomTheme` factory.
  *
  * ```ts
  *  // Example use
- *  import { flatThemeDark } from '@arction/lcjs-themes'
+ *  import { presetThemeDark } from '@arction/lcjs-themes'
  *
- *  const chart = lightningChart().ChartXY({ theme: flatThemeDark })
+ *  const chart = lightningChart().ChartXY({ theme: presetThemeDark })
  * ```
  *
  * Make your own adjustments by:
- * - Referencing source code at https://github.com/Arction/lcjs-themes/blob/main/src/flatThemeDark.ts
+ * - Referencing source code at https://github.com/Arction/lcjs-themes/blob/main/src/presetThemeDark.ts
  * - Using the online editor: https://arction.github.io/lcjs-themes/
  *
  * @public
  */
-export const flatThemeDark = makeCustomTheme({
+export const presetThemeDark = makeCustomTheme({
     isDark: true,
-    gradients: false,
-    effects: false,
+    gradients: true,
+    effects: true,
     fontFamily: 'Segoe UI, -apple-system, Verdana, Helvetica',
     backgroundColor: ColorHEX('#181818ff'),
     textColor: ColorHEX('#ffffc8ff'),
