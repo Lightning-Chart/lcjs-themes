@@ -13,7 +13,7 @@ import { CustomThemeOptions, makeCustomTheme } from './customTheme'
  *
  * @param   options - Configuration options for the created theme.
  * @returns LightningChart JS `Theme` object.
- * @deprecated  Deprecated in v3.1 over `makeCustomTheme`
+ * @deprecated  Deprecated in v3.2 over `makeCustomTheme`
  */
 export const makeFlatTheme = (options: CustomThemeOptions): Theme => {
     return makeCustomTheme({ ...options, gradients: false, effects: false })
