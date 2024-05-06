@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [3.2.0] - 2024-10-04
+## [3.2.1] - 2024-05-07
+
+### Changed
+
+- Loosened dependency to `@arction/lcjs` to be allow anything between v5.0.0 and v6.0.0.
+    - This was done due experiencing many issues where NPM decided to interpret the dependency too restrictively, resulting in 2 installations of different LCJS versions, which further resulted in run-time errors.
+    - Users should manually ensure correct combination of LCJS and themes versions using the support table: https://github.com/Arction/lcjs-themes?tab=readme-ov-file#support-table
+
+## [3.2.0] - 2024-04-10
 
 ### Added
 
