@@ -1,12 +1,12 @@
 import { makeCustomTheme } from './customTheme'
-import { ColorHEX } from '@arction/lcjs'
+import { ColorHEX } from '@lightningchart/lcjs'
 
 /**
  * A dark theme created using `makeCustomTheme` factory.
  *
  * ```ts
  *  // Example use
- *  import { presetThemeDark } from '@arction/lcjs-themes'
+ *  import { presetThemeDark } from '@lightningchart/lcjs-themes'
  *
  *  const chart = lightningChart().ChartXY({ theme: presetThemeDark })
  * ```

@@ -23,7 +23,7 @@ import {
     emptyLine,
     emptyTick,
     transparentFill,
-} from '@arction/lcjs'
+} from '@lightningchart/lcjs'
 
 const colorMissing = ColorRGBA(0, 255, 0)
 

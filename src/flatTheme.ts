@@ -1,4 +1,4 @@
-import { Theme } from '@arction/lcjs'
+import { Theme } from '@lightningchart/lcjs'
 import { CustomThemeOptions, makeCustomTheme } from './customTheme'
 
 /**

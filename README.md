@@ -7,21 +7,21 @@
 ## Usage
 
 ```sh
-npm i @arction/lcjs-themes
+npm i @lightningchart/lcjs-themes
 ```
 
 ```ts
 // Using pre-built open-source themes
-import { flatThemeDark } from '@arction/lcjs-themes'
-import { lightningChart } from '@arction/lcjs'
+import { flatThemeDark } from '@lightningchart/lcjs-themes'
+import { lightningChart } from '@lightningchart/lcjs'
 
 const chart = lightningChart().ChartXY({ theme: flatThemeDark })
 ```
 
 ```ts
 // Creating customized theme using open-source theme factories
-import { makeCustomTheme } from '@arction/lcjs-themes'
-import { lightningChart, ColorHEX } from '@arction/lcjs'
+import { makeCustomTheme } from '@lightningchart/lcjs-themes'
+import { lightningChart, ColorHEX } from '@lightningchart/lcjs'
 
 const myCustomTheme = makeCustomTheme({
     isDark: true,
@@ -63,7 +63,7 @@ Learn more about LightningChart JS [on our web site](https://lightningchart.com/
 
 ## Support Table
 
-`lcjs-themes` is used together with the main chart library [`@arction/lcjs`](https://www.npmjs.com/package/@arction/lcjs).
+`lcjs-themes` is used together with the main chart library [`@lightningchart/lcjs`](https://www.npmjs.com/package/@lightningchart/lcjs).
 Use the below support table to find what version of `lcjs-themes` is compatible with `lcjs`.
 
 | lcjs           | lcjs-themes   |

@@ -1,5 +1,5 @@
 {
-    "name": "@arction/lcjs-themes",
+    "name": "@lightningchart/lcjs-themes",
     "version": "3.2.1",
     "description": "Open-source Themes package for LightningChart JS",
     "keywords": [
@@ -31,7 +31,7 @@
         "deploy": "cd editor && npm i && npm run build && gh-pages -d build --repo git@github.com:Arction/lcjs-themes.git"
     },
     "peerDependencies": {
-        "@arction/lcjs": ">=5.0.0 <6.0.0"
+        "@lightningchart/lcjs": ">=5.0.0 <6.0.0"
     },
     "devDependencies": {
         "@rollup/plugin-babel": "^5.3.1",

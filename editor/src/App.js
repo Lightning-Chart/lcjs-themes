@@ -1,8 +1,8 @@
 import './App.css'
 import { useEffect, useState, useId, useRef, useCallback } from 'react'
 import debounce from 'lodash.debounce'
-import { lightningChart, ColorHEX, AxisScrollStrategies } from '@arction/lcjs'
-import { makeCustomTheme } from '@arction/lcjs-themes'
+import { lightningChart, ColorHEX, AxisScrollStrategies } from '@lightningchart/lcjs'
+import { makeCustomTheme } from '@lightningchart/lcjs-themes'
 import { ReactComponent as ChartXYLogo } from './chartXYExample.svg'
 import { ReactComponent as Chart3DLogo } from './chart3DExample.svg'
 import { ReactComponent as DashboardLogo } from './dashboardExample.svg'
@@ -165,7 +165,7 @@ function App() {
     const [messageApi, contextHolder] = message.useMessage()
 
     const exportCodeSnippetJS = () => {
-        let snippet = `// import { makeCustomTheme } from '@arction/lcjs-themes'\n// import { ColorHEX } from '@arction/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeCustomTheme({\n`
+        let snippet = `// import { makeCustomTheme } from '@lightningchart/lcjs-themes'\n// import { ColorHEX } from '@lightningchart/lcjs'\n// Created with LCJS Theme Editor https://github.com/Arction/lcjs-themes\nconst myLCJSTheme = makeCustomTheme({\n`
         Object.entries(themeType.properties).forEach(([key, type]) => {
             const value = themeProperties[key]
             const valueStr =
