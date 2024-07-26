@@ -7,26 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+-   Moved to `@lightningchart` NPM organization.
+
 ## [3.2.1] - 2024-05-07
 
 ### Changed
 
-- Loosened dependency to `@arction/lcjs` to be allow anything between v5.0.0 and v6.0.0.
-    - This was done due experiencing many issues where NPM decided to interpret the dependency too restrictively, resulting in 2 installations of different LCJS versions, which further resulted in run-time errors.
-    - Users should manually ensure correct combination of LCJS and themes versions using the support table: https://github.com/Arction/lcjs-themes?tab=readme-ov-file#support-table
+-   Loosened dependency to `@arction/lcjs` to be allow anything between v5.0.0 and v6.0.0.
+    -   This was done due experiencing many issues where NPM decided to interpret the dependency too restrictively, resulting in 2 installations of different LCJS versions, which further resulted in run-time errors.
+    -   Users should manually ensure correct combination of LCJS and themes versions using the support table: https://github.com/Arction/lcjs-themes?tab=readme-ov-file#support-table
 
 ## [3.2.0] - 2024-04-10
 
 ### Added
 
-- `makeCustomTheme`
-    - Same as previous `makeFlatTheme` but allows enabling automatic gradients and effects for dark themes. These give much more depth to the generated themes.
-- `presetThemeDark`, preset example of new non-flat themes created with `makeCustomTheme`
+-   `makeCustomTheme`
+    -   Same as previous `makeFlatTheme` but allows enabling automatic gradients and effects for dark themes. These give much more depth to the generated themes.
+-   `presetThemeDark`, preset example of new non-flat themes created with `makeCustomTheme`
 
 ### Deprecated
 
-- Deprecated `makeFlatTheme` over `makeCustomTheme`.
-    - `makeFlatTheme` still works but exists only for backwards compatibility reasons.
+-   Deprecated `makeFlatTheme` over `makeCustomTheme`.
+    -   `makeFlatTheme` still works but exists only for backwards compatibility reasons.
 
 ## [3.1.0] - 2024-02-09
 

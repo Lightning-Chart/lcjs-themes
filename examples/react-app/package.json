@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@lightningchart/lcjs": "^4.0.0",
+        "@lightningchart/lcjs": "^5.0.0",
         "@lightningchart/lcjs-themes": "file:../../package",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
