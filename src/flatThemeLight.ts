@@ -1,12 +1,12 @@
 import { makeCustomTheme } from './customTheme'
-import { ColorHEX } from '@arction/lcjs'
+import { ColorHEX } from '@lightningchart/lcjs'
 
 /**
- * Adaptation of `Themes.light` from `@arction/lcjs` using `makeCustomTheme` factory.
+ * Adaptation of `Themes.light` from `@lightningchart/lcjs` using `makeCustomTheme` factory.
  *
  * ```ts
  *  // Example use
- *  import { flatThemeLight } from '@arction/lcjs-themes'
+ *  import { flatThemeLight } from '@lightningchart/lcjs-themes'
  *
  *  const chart = lightningChart().ChartXY({ theme: flatThemeLight })
  * ```

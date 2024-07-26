@@ -34,7 +34,7 @@ const config = [
     {
         input: ['temp/lcjs-themes/index.js'],
         plugins: rollupPlugins(true),
-        external: ['@arction/lcjs'],
+        external: ['@lightningchart/lcjs'],
         output: [
             {
                 file: 'dist/iife/lcjs-themes.iife.js',
@@ -42,7 +42,7 @@ const config = [
                 name: 'lcjsThemes',
                 sourcemap: false,
                 plugins: [],
-                globals: { '@arction/lcjs': 'lcjs' },
+                globals: { '@lightningchart/lcjs': 'lcjs' },
                 preserveModules: false,
             },
         ],
@@ -51,7 +51,7 @@ const config = [
     {
         input: ['temp/lcjs-themes/index.js'],
         plugins: rollupPlugins(false),
-        external: ['@arction/lcjs', 'immutable', '@arction/eventer', 'earcut', /@babel\/runtime/],
+        external: ['@lightningchart/lcjs', 'immutable', '@lightningchart/eventer', 'earcut', /@babel\/runtime/],
         output: [
             {
                 dir: 'dist/mjs/',

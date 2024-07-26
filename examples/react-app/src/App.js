@@ -1,8 +1,8 @@
 import logo from './logo.svg'
 import './App.css'
 import { useEffect } from 'react'
-import { lightningChart, ColorHEX } from '@arction/lcjs'
-import { makeCustomTheme } from '@arction/lcjs-themes'
+import { lightningChart, ColorHEX } from '@lightningchart/lcjs'
+import { makeCustomTheme } from '@lightningchart/lcjs-themes'
 
 function App() {
     const flatDarkTheme = makeCustomTheme({

@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@arction/lcjs": "^5.1.0",
-        "@arction/lcjs-themes": "^3.1.0",
+        "@lightningchart/lcjs": "^5.1.0",
+        "@lightningchart/lcjs-themes": "^3.1.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
@@ -16,7 +16,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "postinstall": "cd ../ && npm run build && cp -r dist editor/node_modules/@arction/lcjs-themes && cd editor && node fix-local-installation.js",
+        "postinstall": "cd ../ && npm run build && cp -r dist editor/node_modules/@lightningchart/lcjs-themes && cd editor && node fix-local-installation.js",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
