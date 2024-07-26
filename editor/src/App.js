@@ -17,12 +17,11 @@ const lcLicenseKey = undefined
 
 const examples = [
     {
-        name: 'Line Chart',
+        name: 'Area Chart',
         icon: 'chartXY',
         create: (lc, container, theme) => {
             const chart = lc.ChartXY({ container, theme })
-            chart.addLineSeries().addArrayY([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2])
-            chart.forEachAxis((axis) => axis.fit())
+            chart.addPointLineAreaSeries({dataPattern:'ProgressiveX'}).appendSamples({yValues: [1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2]})
             chart.addLegendBox().add(chart)
             return () => {
                 chart.dispose()

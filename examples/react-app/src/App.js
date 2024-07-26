@@ -19,7 +19,9 @@ function App() {
     useEffect(() => {
         const chartContainer = document.getElementById('chart')
         const chart = lightningChart().ChartXY({ container: chartContainer, theme: flatDarkTheme }).setTitle('LightningChart JS Themes')
-        chart.addLineSeries().addArrayY(new Array(100).fill(0).map((_) => Math.random()))
+        chart
+            .addPointLineAreaSeries({ dataPattern: 'ProgressiveX' })
+            .appendSamples({ yValues: new Array(100).fill(0).map((_) => Math.random()) })
         return () => {
             chart.dispose()
         }

@@ -231,10 +231,16 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         options.dataColors,
         (color) => new SolidLine({ fillStyle: new SolidFill({ color }), thickness: 2 }),
     )
-    const dataAreaSolidFillPalette = StylePalette(options.dataColors, (color) => new SolidFill({ color: color.setA(100) }))
     const seriesStrokeStylePalette = dataSolidLinePalette
     const seriesFillStylePalette = dataSolidFillPalette
-    const areaSeriesFillStylePalette = dataAreaSolidFillPalette
+    const areaSeriesFillStylePaletteSolid = StylePalette(options.dataColors, (color) => new SolidFill({ color: color.setA(100) }))
+    const areaSeriesFillStylePaletteGradientUp = StylePalette(options.dataColors, (color) => new LinearGradientFill({
+        angle: 0,
+        stops: [
+            {offset: 0, color: color.setA(0)},
+            {offset: 1, color: color.setA(180)},
+        ]
+    }))
     const dataBorderStrokePalette = dataSolidLinePalette
     const pointSeries3DPointStylePalette = StylePalette(
         options.dataColors,
@@ -413,17 +419,17 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         heatmapGridSeriesWireframeStyle: wireframeStyle,
         heatmapScrollingGridSeriesFillStyle: seriesFillStylePalette,
         heatmapScrollingGridSeriesWireframeStyle: wireframeStyle,
-        areaRangeSeriesFillStyle: areaSeriesFillStylePalette,
+        areaRangeSeriesFillStyle: areaSeriesFillStylePaletteSolid,
         areaRangeSeriesStrokeStyle: dataBorderStrokePalette,
-        areaRangeSeriesFillStyleInverted: areaSeriesFillStylePalette,
+        areaRangeSeriesFillStyleInverted: areaSeriesFillStylePaletteSolid,
         areaRangeSeriesStrokeStyleInverted: dataBorderStrokePalette,
-        areaSeriesBipolarHighFillStyle: areaSeriesFillStylePalette,
+        areaSeriesBipolarHighFillStyle: areaSeriesFillStylePaletteSolid,
         areaSeriesBipolarHighStrokeStyle: dataBorderStrokePalette,
-        areaSeriesBipolarLowFillStyle: areaSeriesFillStylePalette,
+        areaSeriesBipolarLowFillStyle: areaSeriesFillStylePaletteSolid,
         areaSeriesBipolarLowStrokeStyle: dataBorderStrokePalette,
-        areaSeriesPositiveFillStyle: areaSeriesFillStylePalette,
+        areaSeriesPositiveFillStyle: areaSeriesFillStylePaletteGradientUp,
         areaSeriesPositiveStrokeStyle: dataBorderStrokePalette,
-        areaSeriesNegativeFillStyle: areaSeriesFillStylePalette,
+        areaSeriesNegativeFillStyle: areaSeriesFillStylePaletteSolid,
         areaSeriesNegativeStrokeStyle: dataBorderStrokePalette,
         xAxisTitleFont: fontAxisTitles,
         xAxisTitleFillStyle: textFillStyle,
@@ -547,9 +553,9 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         polarPointLineSeriesFillStyle: seriesFillStylePalette,
         polarPointLineSeriesStrokeStyle: seriesStrokeStylePalette,
         polarPointSeriesFillStyle: seriesFillStylePalette,
-        polarPolygonSeriesFillStyle: areaSeriesFillStylePalette,
+        polarPolygonSeriesFillStyle: areaSeriesFillStylePaletteSolid,
         polarPolygonSeriesStrokeStyle: dataBorderStrokePalette,
-        polarAreaSeriesFillStyle: areaSeriesFillStylePalette,
+        polarAreaSeriesFillStyle: areaSeriesFillStylePaletteSolid,
         polarAreaSeriesStrokeStyle: dataBorderStrokePalette,
         polarHeatmapSeriesFillStyle: seriesFillStylePalette,
         zoomBandChartDefocusOverlayFillStyle: new SolidFill({
@@ -601,7 +607,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         sparkPointChartFillStyle: seriesFillStylePalette(0),
         sparkBarChartFillStyle: seriesFillStylePalette(0),
         sparkBarChartStrokeStyle: dataBorderStrokePalette(0),
-        sparkAreaChartFillStyle: areaSeriesFillStylePalette(0),
+        sparkAreaChartFillStyle: areaSeriesFillStylePaletteGradientUp(0),
         sparkAreaChartStrokeStyle: dataBorderStrokePalette(0),
         sparkPieChartFillStyle: seriesFillStylePalette,
         sparkPieChartStrokeStyle: uiBackgroundStrokeStyle,
@@ -621,7 +627,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         spiderChartAxisLabelFont: fontAxisTitles,
         spiderChartAxisStrokeStyle: axisStrokeStyle,
         spiderChartAxisNibStrokeStyle: emptyLine,
-        spiderSeriesFillStyle: areaSeriesFillStylePalette,
+        spiderSeriesFillStyle: areaSeriesFillStylePaletteSolid,
         spiderSeriesStrokeStyle: dataBorderStrokePalette,
         spiderSeriesPointFillStyle: seriesFillStylePalette,
         pieChartBackgroundFillStyle: chartBackgroundFillStyle,
