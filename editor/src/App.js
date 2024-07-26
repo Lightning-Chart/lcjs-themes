@@ -64,7 +64,7 @@ const examples = [
                 { name: 'Category 4', value: 65 },
             ].forEach((item) => pie.addSlice(item.name, item.value))
 
-            const spider = dashboard.createSpiderChart({ columnIndex: 0, rowIndex: 2, columnSpan: 2, rowSpan: 2 }).setTitle('')
+            const spider = dashboard.createSpiderChart({ columnIndex: 0, rowIndex: 2, columnSpan: 1, rowSpan: 2 }).setTitle('')
             spider
                 .addSeries()
                 .addPoints(
@@ -75,7 +75,12 @@ const examples = [
                     { axis: 'Category 5', value: 20 },
                 )
 
-            spider.addLegendBox().add(dashboard)
+            const gaugeChart = dashboard.createGaugeChart({ columnIndex: 1, rowIndex: 2, columnSpan: 1, rowSpan: 2 }).setTitle('')
+            const setGaugeValue = () => {
+                gaugeChart.setValue(Math.random() * 100)
+            }
+            setGaugeValue()
+            setInterval(setGaugeValue, 2500)
 
             return () => {
                 dashboard.dispose()
