@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   Moved to `@lightningchart` NPM organization.
+-   Tweaked area series fill style to utilize transparency more.
 
 ## [3.2.1] - 2024-05-07
 
