@@ -1,6 +1,6 @@
 {
     "name": "@lightningchart/lcjs-themes",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Open-source Themes package for LightningChart JS",
     "keywords": [
         "Arction",
@@ -17,8 +17,9 @@
         "package.json",
         "CHANGELOG.md"
     ],
-    "main": "dist/mjs/index.js",
+    "main": "dist/cjs/index.js",
     "types": "dist/types/index.d.ts",
+    "module": "dist/mjs/index.js",
     "iife": "dist/iife/lcjs-themes.iife.js",
     "engines": {
         "node": ">=12"

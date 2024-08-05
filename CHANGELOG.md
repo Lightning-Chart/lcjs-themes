@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [4.0.0] - 2024-08-06
+## [4.0.2] - 2024-08-06
 
 ### Changed
 
 -   Moved to `@lightningchart` NPM organization.
 -   Tweaked area series fill style to utilize transparency more.
 -   Migrated to `@lightningchart/lcjs` v6.0.0.
+
+### Fixed
+
+-   Fixed ES Module import not working.
 
 ## [3.2.1] - 2024-05-07
 
