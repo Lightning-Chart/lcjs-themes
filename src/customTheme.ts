@@ -88,18 +88,18 @@ export type CustomThemeOptions = {
 
     /**
      * Enable gradients? Defaults to `true`.
-     * 
+     *
      * Only impactful for Dark themes (`isDark` property).
      *
      * `true` -> automatically uses gradients with shifts background colors towards darker and brighter shades.
-     * 
+     *
      * `false` -> all colors are flat.
      */
     gradients?: boolean
     /**
      * Enable effects? Defaults to `true`.
      *
-     * `true` -> Adds subtle shadows behind series, legends, etc. 
+     * `true` -> Adds subtle shadows behind series, legends, etc.
      */
     effects?: boolean
 
@@ -108,6 +108,11 @@ export type CustomThemeOptions = {
         axisTitle: number
         legendTitle: number
         other: number
+    }
+
+    tickStyled?: {
+        length: number
+        padding: number
     }
 
     // ----- Feature specific properties (should be kept optional) -----
@@ -234,13 +239,17 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
     const seriesStrokeStylePalette = dataSolidLinePalette
     const seriesFillStylePalette = dataSolidFillPalette
     const areaSeriesFillStylePaletteSolid = StylePalette(options.dataColors, (color) => new SolidFill({ color: color.setA(100) }))
-    const areaSeriesFillStylePaletteGradientUp = StylePalette(options.dataColors, (color) => new LinearGradientFill({
-        angle: 0,
-        stops: [
-            {offset: 0, color: color.setA(0)},
-            {offset: 1, color: color.setA(180)},
-        ]
-    }))
+    const areaSeriesFillStylePaletteGradientUp = StylePalette(
+        options.dataColors,
+        (color) =>
+            new LinearGradientFill({
+                angle: 0,
+                stops: [
+                    { offset: 0, color: color.setA(0) },
+                    { offset: 1, color: color.setA(180) },
+                ],
+            }),
+    )
     const dataBorderStrokePalette = dataSolidLinePalette
     const pointSeries3DPointStylePalette = StylePalette(
         options.dataColors,
@@ -280,8 +289,8 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
             fillStyle: new SolidFill({ color: options.gridLineColor }),
         }),
         tickStyle: emptyLine,
-        tickLength: 7,
-        tickPadding: 0,
+        tickLength: options.tickStyled?.length !== undefined ? options.tickStyled.length : 7,
+        tickPadding: options.tickStyled?.padding !== undefined ? options.tickStyled.padding : 0,
         labelFont: fontOther,
         labelFillStyle: textFillStyle,
     })
