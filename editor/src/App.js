@@ -21,7 +21,9 @@ const examples = [
         icon: 'chartXY',
         create: (lc, container, theme) => {
             const chart = lc.ChartXY({ container, theme })
-            chart.addPointLineAreaSeries({dataPattern:'ProgressiveX'}).appendSamples({yValues: [1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2]})
+            chart
+                .addPointLineAreaSeries({ dataPattern: 'ProgressiveX' })
+                .appendSamples({ yValues: [1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2] })
             chart.addLegendBox().add(chart)
             return () => {
                 chart.dispose()
@@ -66,6 +68,8 @@ const examples = [
 
             const spider = dashboard.createSpiderChart({ columnIndex: 0, rowIndex: 2, columnSpan: 1, rowSpan: 2 }).setTitle('')
             spider
+                .setAxisInterval({ start: 0, end: 50 })
+                .setScrollStrategy(undefined)
                 .addSeries()
                 .addPoints(
                     { axis: 'Category 1', value: 10 },

@@ -88,18 +88,18 @@ export type CustomThemeOptions = {
 
     /**
      * Enable gradients? Defaults to `true`.
-     * 
+     *
      * Only impactful for Dark themes (`isDark` property).
      *
      * `true` -> automatically uses gradients with shifts background colors towards darker and brighter shades.
-     * 
+     *
      * `false` -> all colors are flat.
      */
     gradients?: boolean
     /**
      * Enable effects? Defaults to `true`.
      *
-     * `true` -> Adds subtle shadows behind series, legends, etc. 
+     * `true` -> Adds subtle shadows behind series, legends, etc.
      */
     effects?: boolean
 
@@ -151,6 +151,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
     //
     //
     const isDark = options.isDark !== undefined ? options.isDark : true
+    const labelShadow: Color | undefined = options.isDark ? ColorRGBA(0, 0, 0, 255) : undefined
     let lcjsBackgroundFillStyle: FillStyle
     if (!options.gradients || !options.isDark) {
         lcjsBackgroundFillStyle = new SolidFill({
@@ -235,13 +236,17 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
     const seriesStrokeStylePalette = dataSolidLinePalette
     const seriesFillStylePalette = dataSolidFillPalette
     const areaSeriesFillStylePaletteSolid = StylePalette(options.dataColors, (color) => new SolidFill({ color: color.setA(100) }))
-    const areaSeriesFillStylePaletteGradientUp = StylePalette(options.dataColors, (color) => new LinearGradientFill({
-        angle: 0,
-        stops: [
-            {offset: 0, color: color.setA(0)},
-            {offset: 1, color: color.setA(180)},
-        ]
-    }))
+    const areaSeriesFillStylePaletteGradientUp = StylePalette(
+        options.dataColors,
+        (color) =>
+            new LinearGradientFill({
+                angle: 0,
+                stops: [
+                    { offset: 0, color: color.setA(0) },
+                    { offset: 1, color: color.setA(180) },
+                ],
+            }),
+    )
     const dataBorderStrokePalette = dataSolidLinePalette
     const pointSeries3DPointStylePalette = StylePalette(
         options.dataColors,
@@ -275,7 +280,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         fillStyle: new SolidFill({ color: options.axisColor }),
     })
     const axisOverlayStyle = new SolidFill({ color: ColorRGBA(0, 0, 0, 1) }) // NOTE: Slight opaqueness is required for this overlay becoming visible when highlighted.
-    const tickStyle = new TickStyle({
+    const tickStyleMajor = new TickStyle({
         gridStrokeStyle: new SolidLine({
             thickness: 1,
             fillStyle: new SolidFill({ color: options.gridLineColor }),
@@ -285,20 +290,30 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         tickPadding: 0,
         labelFont: fontOther,
         labelFillStyle: textFillStyle,
+        labelShadow,
+    })
+    const tickStyleMinor = new TickStyle({
+        gridStrokeStyle: emptyLine,
+        tickStyle: emptyLine,
+        tickLength: 4,
+        tickPadding: 3,
+        labelFont: fontOther,
+        labelFillStyle: emptyFill,
+        labelShadow,
     })
     const numericTickStrategy = new NumericTickStrategy({
         extremeTickStyle: emptyTick,
-        majorTickStyle: tickStyle,
-        minorTickStyle: tickStyle,
+        majorTickStyle: tickStyleMajor,
+        minorTickStyle: tickStyleMinor,
     })
     const dateTimeTickStrategy = new DateTimeTickStrategy({
-        greatTickStyle: tickStyle.setTickLength(50).setTickPadding(-14),
-        majorTickStyle: tickStyle,
-        minorTickStyle: tickStyle,
+        greatTickStyle: emptyTick,
+        majorTickStyle: tickStyleMajor,
+        minorTickStyle: tickStyleMinor,
     })
     const timeTickStrategy = new TimeTickStrategy({
-        majorTickStyle: tickStyle,
-        minorTickStyle: tickStyle,
+        majorTickStyle: tickStyleMajor,
+        minorTickStyle: tickStyleMinor,
     })
     const cursorGridStrokeStyle = new DashedLine({
         thickness: 1,
@@ -372,12 +387,11 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         chartXYBackgroundStrokeStyle: emptyLine,
         chartXYTitleFont: fontChartTitles,
         chartXYTitleFillStyle: textFillStyle,
+        chartXYTitleShadow: labelShadow,
         chartXYSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
         chartXYSeriesBackgroundStrokeStyle: emptyLine,
         chartXYZoomingRectangleFillStyle: zoomRectangleFillStyle,
         chartXYZoomingRectangleStrokeStyle: zoomRectangleStrokeStyle,
-        chartXYFittingRectangleFillStyle: zoomRectangleFillStyle,
-        chartXYFittingRectangleStrokeStyle: zoomRectangleStrokeStyle,
         lineSeriesStrokeStyle: seriesStrokeStylePalette,
         pointLineSeriesStrokeStyle: seriesStrokeStylePalette,
         pointLineSeriesFillStyle: seriesFillStylePalette,
@@ -438,7 +452,6 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         xAxisTitleFont: fontAxisTitles,
         xAxisTitleFillStyle: textFillStyle,
         xAxisStrokeStyle: axisStrokeStyle,
-        xAxisNibStyle: emptyLine,
         xAxisOverlayStyle: axisOverlayStyle,
         xAxisZoomingBandFillStyle: zoomRectangleFillStyle,
         xAxisZoomingBandStrokeStyle: emptyLine,
@@ -448,7 +461,6 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         yAxisTitleFont: fontAxisTitles,
         yAxisTitleFillStyle: textFillStyle,
         yAxisStrokeStyle: axisStrokeStyle,
-        yAxisNibStyle: emptyLine,
         yAxisOverlayStyle: axisOverlayStyle,
         yAxisZoomingBandFillStyle: zoomRectangleFillStyle,
         yAxisZoomingBandStrokeStyle: emptyLine,
@@ -462,6 +474,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         barChartBackgroundStrokeStyle: emptyLine,
         barChartTitleFont: fontChartTitles,
         barChartTitleFillStyle: textFillStyle,
+        barChartTitleShadow: labelShadow,
         barChartSeriesBackgroundFillStyle: transparentFill,
         barChartSeriesBackgroundStrokeStyle: emptyLine,
         barChartBarFillStyle: seriesFillStylePalette,
@@ -483,27 +496,36 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
             tickStyle: numericTickStrategy.majorTickStyle.tickStyle,
             tickLength: 0,
             labelRotation: 0,
+            labelShadow,
         },
         barChartValueLabelsAfterBars: {
             position: 'after-bar',
-            formatter: (bar, category, value) => bar.chart.valueAxis.formatValue(value),
+            formatter: (info) => info.chart.valueAxis.formatValue(info.value),
             labelFillStyle: numericTickStrategy.majorTickStyle.labelFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
             labelMargin: 8,
             labelRotation: 0,
+            displayStackedSum: true,
+            displayStackedIndividuals: false,
+            labelShadow,
         },
         barChartValueLabelsInsideBars: {
             position: 'inside-bar',
-            formatter: (bar, category, value) => bar.chart.valueAxis.formatValue(value),
+            formatter: (info) => info.chart.valueAxis.formatValue(info.value),
             labelFillStyle: isDark ? whiteFillStyle : blackFillStyle,
             labelFont: numericTickStrategy.majorTickStyle.labelFont,
             labelMargin: 8,
             labelRotation: 0,
+            displayStackedSum: true,
+            displayStackedIndividuals: false,
+            labelShadow,
         },
+        barChartCornerRadius: 10,
         chart3DBackgroundFillStyle: chartBackgroundFillStyle,
         chart3DBackgroundStrokeStyle: emptyLine,
         chart3DTitleFont: fontChartTitles,
         chart3DTitleFillStyle: textFillStyle,
+        chart3DTitleShadow: labelShadow,
         chart3DSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
         chart3DSeriesBackgroundStrokeStyle: emptyLine,
         chart3DBoundingBoxStrokeStyle: emptyLine,
@@ -539,12 +561,14 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         polarChartBackgroundStrokeStyle: emptyLine,
         polarChartTitleFont: fontChartTitles,
         polarChartTitleFillStyle: textFillStyle,
+        polarChartTitleShadow: labelShadow,
         polarChartSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
         polarChartSeriesBackgroundStrokeStyle: emptyLine,
         polarSectorFillStyle: bandFillStyle,
         polarSectorStrokeStyle: bandStrokeStyle,
         polarAmplitudeAxisTitleFont: fontAxisTitles,
         polarAmplitudeAxisTitleFillStyle: textFillStyle,
+        polarAmplitudeAxisTitleShadow: labelShadow,
         polarAmplitudeAxisStrokeStyle: axisStrokeStyle,
         polarAmplitudeAxisNumericTicks: numericTickStrategy,
         polarAmplitudeAxisDateTimeTicks: dateTimeTickStrategy,
@@ -552,7 +576,8 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         polarRadialAxisTitleFont: fontAxisTitles,
         polarRadialAxisTitleFillStyle: textFillStyle,
         polarRadialAxisStrokeStyle: axisStrokeStyle,
-        polarRadialAxisTickStyle: tickStyle,
+        polarRadialAxisTickStyle: tickStyleMajor,
+        polarRadialAxisMarginAfterTicks: 0,
         polarLineSeriesStrokeStyle: seriesStrokeStylePalette,
         polarPointLineSeriesFillStyle: seriesFillStylePalette,
         polarPointLineSeriesStrokeStyle: seriesStrokeStylePalette,
@@ -575,6 +600,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         mapChartBackgroundStrokeStyle: emptyLine,
         mapChartTitleFont: fontChartTitles,
         mapChartTitleFillStyle: textFillStyle,
+        mapChartTitleShadow: labelShadow,
         mapChartFillStyle: primaryDataFillStyle,
         mapChartStrokeStyle: new SolidLine({
             thickness: 1,
@@ -591,6 +617,8 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         dataGridBackgroundStrokeStyle: emptyLine,
         dataGridTitleFont: fontChartTitles,
         dataGridTitleFillStyle: textFillStyle,
+        dataGridTitleShadow: labelShadow,
+        dataGridTextShadow: labelShadow,
         dataGridTextFont: fontOther,
         dataGridTextFillStyle: textFillStyle,
         dataGridCellBackgroundFillStyle: seriesBackgroundFillStyle,
@@ -606,7 +634,8 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         }),
         dataGridScrollBarButtonStrokeStyle: uiBackgroundStrokeStyle,
         dataGridScrollBarButtonArrowFillStyle: uiButtonFillStyle,
-        dataGridScrollBarButtonArrowStrokeStyle: emptyLine,
+        dataGridScrollBarThickness: 20,
+        textSeriesShadow: labelShadow,
         sparkLineChartStrokeStyle: seriesStrokeStylePalette(0),
         sparkPointChartFillStyle: seriesFillStylePalette(0),
         sparkBarChartFillStyle: seriesFillStylePalette(0),
@@ -622,9 +651,10 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         spiderChartBackgroundStrokeStyle: emptyLine,
         spiderChartTitleFont: fontChartTitles,
         spiderChartTitleFillStyle: textFillStyle,
+        spiderChartTitleShadow: labelShadow,
         spiderChartSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
         spiderChartSeriesBackgroundStrokeStyle: emptyLine,
-        spiderChartWebStyle: tickStyle.gridStrokeStyle,
+        spiderChartWebStyle: tickStyleMajor.gridStrokeStyle,
         spiderChartScaleLabelFillStyle: textFillStyle,
         spiderChartScaleLabelFont: fontOther,
         spiderChartAxisLabelFillStyle: textFillStyle,
@@ -634,33 +664,40 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         spiderSeriesFillStyle: areaSeriesFillStylePaletteSolid,
         spiderSeriesStrokeStyle: dataBorderStrokePalette,
         spiderSeriesPointFillStyle: seriesFillStylePalette,
+        spiderChartScaleLabelShadow: labelShadow,
         pieChartBackgroundFillStyle: chartBackgroundFillStyle,
         pieChartBackgroundStrokeStyle: emptyLine,
         pieChartTitleFont: fontAxisTitles,
         pieChartTitleFillStyle: textFillStyle,
+        pieChartTitleShadow: labelShadow,
         pieChartSliceFillStylePalette: seriesFillStylePalette,
         pieChartSliceStrokeStyle: uiBackgroundStrokeStyle,
         pieChartSliceLabelFont: fontOther,
         pieChartSliceLabelFillStyle: textFillStyle,
         pieChartConnectorStrokeStyle: uiBackgroundStrokeStyle,
+        pieChartSliceLabelShadow: labelShadow,
         funnelChartBackgroundFillStyle: chartBackgroundFillStyle,
         funnelChartBackgroundStrokeStyle: emptyLine,
         funnelChartTitleFont: fontChartTitles,
         funnelChartTitleFillStyle: textFillStyle,
+        funnelChartTitleShadow: labelShadow,
         funnelChartSliceFillStylePalette: seriesFillStylePalette,
         funnelChartSliceStrokeStyle: uiBackgroundStrokeStyle,
         funnelChartSliceLabelFont: fontOther,
         funnelChartSliceLabelFillStyle: textFillStyle,
         funnelChartConnectorStrokeStyle: uiBackgroundStrokeStyle,
+        funnelChartSliceLabelShadow: labelShadow,
         pyramidChartBackgroundFillStyle: chartBackgroundFillStyle,
         pyramidChartBackgroundStrokeStyle: emptyLine,
         pyramidChartTitleFont: fontChartTitles,
         pyramidChartTitleFillStyle: textFillStyle,
+        pyramidChartTitleShadow: labelShadow,
         pyramidChartSliceFillStylePalette: seriesFillStylePalette,
         pyramidChartSliceStrokeStyle: uiBackgroundStrokeStyle,
         pyramidChartSliceLabelFont: fontOther,
         pyramidChartSliceLabelFillStyle: textFillStyle,
         pyramidChartConnectorStrokeStyle: uiBackgroundStrokeStyle,
+        pyramidChartSliceLabelShadow: labelShadow,
         gaugeChartValueLabelFont: fontOther.setSize(60),
         gaugeChartUnitLabelFont: fontOther.setSize(40),
         gaugeChartTickFont: fontOther.setSize(30),
@@ -689,6 +726,22 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         gaugeChartBackgroundStrokeStyle: emptyLine,
         gaugeChartTitleFont: fontChartTitles,
         gaugeChartTitleFillStyle: textFillStyle,
+        gaugeChartTitleShadow: labelShadow,
+        treeMapChartBackgroundFillStyle: chartBackgroundFillStyle,
+        treeMapChartBackgroundStrokeStyle: emptyLine,
+        treeMapChartParentColor: isDark ? ColorRGBA(24, 30, 33) : ColorRGBA(217, 217, 217),
+        treeMapChartNodeColors: options.dataColors.map((color) => color.setA(125)),
+        treeMapChartNodeStrokeStyle: new SolidLine({ thickness: 1, fillStyle: new SolidFill({ color: ColorRGBA(0, 0, 0) }) }),
+        treeMapChartTitleFillStyle: textFillStyle,
+        treeMapChartTitleShadow: labelShadow,
+        treeMapChartTitleFont: fontChartTitles,
+        treeMapChartPathLabelFillStyle: textFillStyle,
+        treeMapChartPathLabelFont: fontOther,
+        treeMapChartLabelHeaderFillStyle: textFillStyle,
+        treeMapChartLabelHeaderFont: fontOther.setWeight('bold'),
+        treeMapChartLabelFillStyle: textFillStyle,
+        treeMapChartLabelFont: fontOther,
+        treeMapChartCornerRadius: 8,
         uiPanelBackgroundFillStyle: chartBackgroundFillStyle,
         uiPanelBackgroundStrokeStyle: emptyLine,
         onScreenMenuBackgroundColor: ColorRGBA(254, 204, 0, 0.7),
@@ -696,6 +749,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         parallelCoordinateChartBackgroundStrokeStyle: emptyLine,
         parallelCoordinateChartTitleFont: fontChartTitles,
         parallelCoordinateChartTitleFillStyle: textFillStyle,
+        parallelCoordinateChartTitleShadow: labelShadow,
         parallelCoordinateChartSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
         parallelCoordinateChartSeriesBackgroundStrokeStyle: emptyLine,
         parallelCoordinateChartSeriesColor: StylePalette(options.dataColors, (color) => color),
@@ -728,6 +782,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         uiTextFont: fontOther,
         legendTitleFillStyle: textFillStyle,
         legendTitleFont: fontLegendTitle,
+        legendBorderRadius: 8,
         cursorTickMarkerXBackgroundFillStyle: uiBackgroundFillStyle,
         cursorTickMarkerXBackgroundStrokeStyle: uiBackgroundStrokeStyle,
         cursorTickMarkerXTextFillStyle: textFillStyle,
@@ -743,14 +798,16 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         cursorResultTableStrokeStyle: uiBackgroundStrokeStyle,
         cursorResultTableTextFillStyle: textFillStyle,
         cursorResultTableTextFont: fontOther,
+        cursorResultTableHeaderBackgroundFillStyle: undefined,
+        cursorResultTableBorderRadius: 5,
         cursorGridStrokeStyleX: cursorGridStrokeStyle,
         cursorGridStrokeStyleY: cursorGridStrokeStyle,
         cursor3DGridStrokeStyleX: cursor3DGridStrokeStyle,
         cursor3DGridStrokeStyleY: cursor3DGridStrokeStyle,
         cursor3DGridStrokeStyleZ: cursor3DGridStrokeStyle,
-        cursor3DTickStrokeStyleX: tickStyle.tickStyle,
-        cursor3DTickStrokeStyleY: tickStyle.tickStyle,
-        cursor3DTickStrokeStyleZ: tickStyle.tickStyle,
+        cursor3DTickStrokeStyleX: tickStyleMajor.tickStyle,
+        cursor3DTickStrokeStyleY: tickStyleMajor.tickStyle,
+        cursor3DTickStrokeStyleZ: tickStyleMajor.tickStyle,
         cursor3DTickLabelFillStyleX: textFillStyle,
         cursor3DTickLabelFillStyleY: textFillStyle,
         cursor3DTickLabelFillStyleZ: textFillStyle,

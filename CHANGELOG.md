@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.0.0] - 2025-02-05
+
+### Changed
+
+-   Migrated to `@lightningchart/lcjs` v7.0.
+
 ## [4.1.0] - 2024-11-06
 
 -   Added theming for `ParallelCoordinateChart`, a new feature introduced in LightningChart JS v6.1.
