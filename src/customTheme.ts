@@ -218,6 +218,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         style: 'normal',
     })
     const textFillStyle = new SolidFill({ color: options.textColor })
+    const uiTextFillStyleHidden = new SolidFill({ color: options.isDark ? ColorRGBA(70, 70, 70, 255) : ColorRGBA(170, 170, 170, 255) })
     const zoomRectangleFillStyle = new SolidFill({
         color: isDark ? ColorRGBA(255, 255, 255, 20) : ColorRGBA(0, 0, 0, 20),
     })
@@ -316,7 +317,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         fillStyle: isDark ? whiteFillStyle : blackFillStyle,
     })
     const uiButtonFillStyle = isDark ? whiteFillStyle : blackFillStyle
-    const uiButtonFillStyleHidden = new SolidFill({ color: options.isDark ? ColorRGBA(70, 70, 70, 255) : ColorRGBA(170, 170, 170, 255) })
+    const uiButtonFillStyleHidden = uiTextFillStyleHidden
     let uiBackgroundFillStyle: FillStyle
     if (!options.gradients || !options.isDark) {
         uiBackgroundFillStyle = new SolidFill({
@@ -691,6 +692,31 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         uiPanelBackgroundFillStyle: chartBackgroundFillStyle,
         uiPanelBackgroundStrokeStyle: emptyLine,
         onScreenMenuBackgroundColor: ColorRGBA(254, 204, 0, 0.7),
+        parallelCoordinateChartBackgroundFillStyle: chartBackgroundFillStyle,
+        parallelCoordinateChartBackgroundStrokeStyle: emptyLine,
+        parallelCoordinateChartTitleFont: fontChartTitles,
+        parallelCoordinateChartTitleFillStyle: textFillStyle,
+        parallelCoordinateChartSeriesBackgroundFillStyle: seriesBackgroundFillStyle,
+        parallelCoordinateChartSeriesBackgroundStrokeStyle: emptyLine,
+        parallelCoordinateChartSeriesColor: StylePalette(options.dataColors, (color) => color),
+        parallelCoordinateChartSeriesColorUnselected: isDark ? ColorRGBA(255, 255, 255, 40) : ColorRGBA(0, 0, 0, 40),
+        parallelCoordinateChartSeriesLineThickness: 2,
+        parallelCoordinateAxisTitleFont: fontAxisTitles,
+        parallelCoordinateAxisTitleFillStyle: textFillStyle,
+        parallelCoordinateAxisNumericTicks: numericTickStrategy,
+        parallelCoordinateAxisDateTimeTicks: dateTimeTickStrategy,
+        parallelCoordinateAxisTimeTicks: timeTickStrategy,
+        parallelCoordinateAxisStrokeStyle: axisStrokeStyle,
+        parallelCoordinateAxisRangeSelectorFillStyle: uiBackgroundFillStyle,
+        parallelCoordinateAxisRangeSelectorStrokeStyle: uiBackgroundStrokeStyle,
+        parallelCoordinateChartPointedSeriesLineStyle: seriesStrokeStylePalette(0),
+        parallelCoordinateAxisBackgroundFillStyle: new LinearGradientFill({
+            angle: 90,
+            stops: [
+                { offset: 0.0, color: options.isDark ? ColorRGBA(0, 0, 0, 0) : ColorRGBA(255, 255, 255, 0) },
+                { offset: 1.0, color: options.isDark ? ColorRGBA(0, 0, 0, 255) : ColorRGBA(255, 255, 255, 180) },
+            ],
+        }),
         uiButtonFillStyle,
         uiButtonFillStyleHidden,
         uiButtonStrokeStyle: uiBackgroundStrokeStyle,
@@ -698,7 +724,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         uiBackgroundFillStyle,
         uiBackgroundStrokeStyle,
         uiTextFillStyle: textFillStyle,
-        uiTextFillStyleHidden: new SolidFill({ color: options.isDark ? ColorRGBA(70, 70, 70, 255) : ColorRGBA(170, 170, 170, 255) }),
+        uiTextFillStyleHidden,
         uiTextFont: fontOther,
         legendTitleFillStyle: textFillStyle,
         legendTitleFont: fontLegendTitle,
