@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [6.0.0] - TBD
+
+### Changed
+
+-   Migrated to `@lightningchart/lcjs` v8.0.
+
 ## [5.0.1] - 2025-02-05
 
 ### Changed

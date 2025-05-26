@@ -22,6 +22,7 @@ import {
     emptyFill,
     emptyLine,
     emptyTick,
+    interpolateColor,
     transparentFill,
 } from '@lightningchart/lcjs'
 
@@ -145,8 +146,10 @@ export type CustomThemeOptions = {
 export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
     options.gradients = options.gradients !== undefined ? options.gradients : true
     options.effects = options.effects !== undefined ? options.effects : true
-    const whiteFillStyle = new SolidFill({ color: ColorRGBA(255, 255, 255) })
-    const blackFillStyle = new SolidFill({ color: ColorRGBA(0, 0, 0) })
+    const colorWhite = ColorRGBA(255, 255, 255)
+    const colorBlack = ColorRGBA(0, 0, 0)
+    const whiteFillStyle = new SolidFill({ color: colorWhite })
+    const blackFillStyle = new SolidFill({ color: colorBlack })
     //
     //
     //
@@ -372,6 +375,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         })
         effectsDashboardSplitters = true
     }
+    const pointSeriesStroke = new SolidLine({ thickness: 1, fillStyle: options.isDark ? whiteFillStyle : blackFillStyle })
 
     const flatTheme: Theme = {
         isDark,
@@ -383,6 +387,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         highlightColorOffset,
         highlightColorOffsetAxisOverlay,
         dashboardSplitterStyle,
+        panelPadding: 7,
         chartXYBackgroundFillStyle: chartBackgroundFillStyle,
         chartXYBackgroundStrokeStyle: emptyLine,
         chartXYTitleFont: fontChartTitles,
@@ -392,10 +397,12 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         chartXYSeriesBackgroundStrokeStyle: emptyLine,
         chartXYZoomingRectangleFillStyle: zoomRectangleFillStyle,
         chartXYZoomingRectangleStrokeStyle: zoomRectangleStrokeStyle,
+        chartXYTitleMargin: 5,
         lineSeriesStrokeStyle: seriesStrokeStylePalette,
         pointLineSeriesStrokeStyle: seriesStrokeStylePalette,
         pointLineSeriesFillStyle: seriesFillStylePalette,
         pointSeriesFillStyle: seriesFillStylePalette,
+        pointSeriesStrokeStyle: pointSeriesStroke,
         ellipseSeriesFillStyle: seriesFillStylePalette,
         ellipseSeriesStrokeStyle: seriesStrokeStylePalette,
         polygonSeriesFillStyle: seriesFillStylePalette,
@@ -582,6 +589,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         polarPointLineSeriesFillStyle: seriesFillStylePalette,
         polarPointLineSeriesStrokeStyle: seriesStrokeStylePalette,
         polarPointSeriesFillStyle: seriesFillStylePalette,
+        polarPointSeriesStrokeStyle: pointSeriesStroke,
         polarPolygonSeriesFillStyle: areaSeriesFillStylePaletteSolid,
         polarPolygonSeriesStrokeStyle: dataBorderStrokePalette,
         polarAreaSeriesFillStyle: areaSeriesFillStylePaletteSolid,
@@ -635,6 +643,7 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         dataGridScrollBarButtonStrokeStyle: uiBackgroundStrokeStyle,
         dataGridScrollBarButtonArrowFillStyle: uiButtonFillStyle,
         dataGridScrollBarThickness: 20,
+        dataGridCellPadding: 5,
         textSeriesShadow: labelShadow,
         sparkLineChartStrokeStyle: seriesStrokeStylePalette(0),
         sparkPointChartFillStyle: seriesFillStylePalette(0),
@@ -773,16 +782,29 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         }),
         uiButtonFillStyle,
         uiButtonFillStyleHidden,
-        uiButtonStrokeStyle: uiBackgroundStrokeStyle,
+        uiButtonStrokeStyle: options.isDark
+            ? emptyLine
+            : new SolidLine({
+                  thickness: 1,
+                  fillStyle: new SolidFill({ color: colorBlack }),
+              }),
         uiButtonSize: 10,
         uiBackgroundFillStyle,
         uiBackgroundStrokeStyle,
         uiTextFillStyle: textFillStyle,
         uiTextFillStyleHidden,
         uiTextFont: fontOther,
+        uiTextPadding: 5,
         legendTitleFillStyle: textFillStyle,
         legendTitleFont: fontLegendTitle,
         legendBorderRadius: 8,
+        legendPadding: 5,
+        legendLUTLabelMargin: 7,
+        legendLUTUnitLabelMargin: 7,
+        legendLUTLengthHorizontal: 160,
+        legendLUTThicknessHorizontal: 15,
+        legendLUTLengthVertical: 140,
+        legendLUTThicknessVertical: 25,
         cursorTickMarkerXBackgroundFillStyle: uiBackgroundFillStyle,
         cursorTickMarkerXBackgroundStrokeStyle: uiBackgroundStrokeStyle,
         cursorTickMarkerXTextFillStyle: textFillStyle,
@@ -792,14 +814,29 @@ export const makeCustomTheme = (options: CustomThemeOptions): Theme => {
         cursorTickMarkerYTextFillStyle: textFillStyle,
         cursorTickMarkerYTextFont: fontOther,
         cursorPointMarkerSize: { x: 9, y: 9 },
-        cursorPointMarkerShape: PointShape.Cross,
-        cursorPointMarkerFillStyle: cursorGridStrokeStyle.getFillStyle(),
+        cursorPointMarkerShape: PointShape.Circle,
         cursorResultTableFillStyle: uiBackgroundFillStyle,
         cursorResultTableStrokeStyle: uiBackgroundStrokeStyle,
         cursorResultTableTextFillStyle: textFillStyle,
         cursorResultTableTextFont: fontOther,
         cursorResultTableHeaderBackgroundFillStyle: undefined,
         cursorResultTableBorderRadius: 5,
+        cursorPointMarkerFillStyle: emptyFill, // NOTE: Overridden by dynamic cursor behavior
+        cursorPointMarkerStrokeStyle: emptyLine,
+        cursorDynamicBehavior: {
+            pointMarkerFill: (dataColor) =>
+                new SolidFill({ color: interpolateColor(dataColor, options.isDark ? colorBlack : colorWhite, 0.2, 230) }),
+            pointMarkerStroke: (dataColor) =>
+                new SolidLine({
+                    thickness: 2,
+                    fillStyle: new SolidFill({
+                        color: interpolateColor(dataColor, options.isDark ? colorWhite : colorBlack, options.isDark ? 0.8 : 0.6, 204),
+                    }),
+                }),
+            pointMarkerSize: (dataPointSize) => {
+                return { x: dataPointSize + 3, y: dataPointSize + 3 }
+            },
+        },
         cursorGridStrokeStyleX: cursorGridStrokeStyle,
         cursorGridStrokeStyleY: cursorGridStrokeStyle,
         cursor3DGridStrokeStyleX: cursor3DGridStrokeStyle,
