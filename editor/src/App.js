@@ -13,7 +13,8 @@ import { ConfigProvider, Select, message, Switch } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
 // https://lightningchart.com/js-charts
-const lcLicenseKey = undefined
+const lcLicenseKey =
+    '0002-aOnYwYP+Wy5MJyXQ+KhMO7Ty4mjgBwDo2MOX5Vk7-MEQCIHcZeFZd4reOR77ZXaVH0jRvqhIPOS1GX1nbwQLTUGjnAiBPRtrmyVhs2vgERqk+Y1FB5rtZ1xG+mgWM8tCGy7xc4w=='
 
 const examples = [
     {
@@ -21,10 +22,7 @@ const examples = [
         icon: 'chartXY',
         create: (lc, container, theme) => {
             const chart = lc.ChartXY({ container, theme })
-            chart
-                .addPointLineAreaSeries({ dataPattern: 'ProgressiveX' })
-                .appendSamples({ yValues: [1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2] })
-            chart.addLegendBox().add(chart)
+            chart.addAreaSeries().appendSamples({ yValues: [1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2] })
             return () => {
                 chart.dispose()
             }
@@ -36,15 +34,13 @@ const examples = [
         create: (lc, container, theme) => {
             const dashboard = lc.Dashboard({ container, theme, numberOfColumns: 2, numberOfRows: 4, rowSpan: 1 })
             const xyChart = dashboard.createChartXY({ columnIndex: 0, rowIndex: 0 }).setTitle('')
-            const xySeries = xyChart
-                .addLineSeries({ dataPattern: { pattern: 'ProgressiveX' } })
-                .setStrokeStyle((stroke) => stroke.setThickness(-1))
+            const xySeries = xyChart.addLineSeries().setStrokeStyle((stroke) => stroke.setThickness(-1))
             const interval = setInterval(() => {
-                xySeries.add({ x: xySeries.getXMax() + 1, y: Math.random() })
+                xySeries.appendSample({ x: xySeries.getXMax() + 1, y: Math.random() })
             }, 10)
             xyChart
                 .getDefaultAxisX()
-                .setScrollStrategy(AxisScrollStrategies.progressive)
+                .setScrollStrategy(AxisScrollStrategies.scrolling)
                 .setInterval({ start: -1000, end: 0, stopAxisAfter: false })
 
             const barChart = dashboard
@@ -102,7 +98,6 @@ const examples = [
             chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 2 })))
             chart.getDefaultAxisX().fit()
             chart.getDefaultAxisZ().setInterval({ start: -0.5, end: 2.5 })
-            chart.addLegendBox().add(chart)
             return () => {
                 chart.dispose()
             }
