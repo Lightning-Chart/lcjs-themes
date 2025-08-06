@@ -13,8 +13,7 @@ import { ConfigProvider, Select, message, Switch } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
 // https://lightningchart.com/js-charts
-const lcLicenseKey =
-    '0002-aOnYwYP+Wy5MJyXQ+KhMO7Ty4mjgBwDo2MOX5Vk7-MEQCIHcZeFZd4reOR77ZXaVH0jRvqhIPOS1GX1nbwQLTUGjnAiBPRtrmyVhs2vgERqk+Y1FB5rtZ1xG+mgWM8tCGy7xc4w=='
+const lcLicenseKey = undefined
 
 const examples = [
     {

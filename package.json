@@ -7,7 +7,7 @@
         "lightningchart",
         "lightning chart"
     ],
-    "homepage": "https://github.com/Arction/lcjs-themes",
+    "homepage": "https://github.com/lightning-chart/lcjs-themes",
     "license": "MIT",
     "author": "LightningChart Ltd.",
     "files": [
@@ -29,7 +29,7 @@
         "build": "shx rm -r dist & npm run ts && rollup -c rollup.config.js && npm run build:types",
         "build:types": "shx mkdir dist/types && shx cp temp/lcjs-themes/*.d.ts dist/types/",
         "package": "npm run build && sh ./release/package.sh",
-        "deploy": "cd editor && npm i && npm run build && gh-pages -d build --repo git@github.com:Arction/lcjs-themes.git"
+        "deploy": "cd editor && npm i && npm run build && gh-pages -d build --repo git@github.com:lightning-chart/lcjs-themes.git"
     },
     "peerDependencies": {
         "@lightningchart/lcjs": "^8.0.0"
