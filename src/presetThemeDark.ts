@@ -12,8 +12,8 @@ import { ColorHEX } from '@lightningchart/lcjs'
  * ```
  *
  * Make your own adjustments by:
- * - Referencing source code at https://github.com/Arction/lcjs-themes/blob/main/src/presetThemeDark.ts
- * - Using the online editor: https://arction.github.io/lcjs-themes/
+ * - Referencing source code at https://github.com/Lightning-Chart/lcjs-themes/blob/main/src/presetThemeDark.ts
+ * - Using the online editor: https://Lightning-Chart.github.io/lcjs-themes/
  *
  * @public
  */

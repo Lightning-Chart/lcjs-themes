@@ -1,8 +1,8 @@
 # Open-source Themes package for LightningChart JS
 
--   Provides tools and ready-made options for customizing LightningChart JS colors and styles
--   Helps with kicking off your own custom themes development by checking through the open-source repository
--   No need to wait for new LightningChart JS versions to get updates for themes, colorization and styling
+- Provides tools and ready-made options for customizing LightningChart JS colors and styles
+- Helps with kicking off your own custom themes development by checking through the open-source repository
+- No need to wait for new LightningChart JS versions to get updates for themes, colorization and styling
 
 ## Usage
 
@@ -39,13 +39,13 @@ const myCustomTheme = makeCustomTheme({
 const chart = lightningChart().ChartXY({ theme: myCustomTheme })
 ```
 
-You can also use the included [no-code editor](https://arction.github.io/lcjs-themes/) for making custom themes without coding.
+You can also use the included [no-code editor](https://Lightning-Chart.github.io/lcjs-themes/) for making custom themes without coding.
 
-See [CHANGELOG](https://github.com/Arction/lcjs-themes/blob/main/CHANGELOG.md) for latest additions to package contents.
+See [CHANGELOG](https://github.com/Lightning-Chart/lcjs-themes/blob/main/CHANGELOG.md) for latest additions to package contents.
 
 ## Examples
 
-See [examples](https://github.com/Arction/lcjs-themes/blob/main/examples/) on how to use themes in different scenarios:
+See [examples](https://github.com/Lightning-Chart/lcjs-themes/blob/main/examples/) on how to use themes in different scenarios:
 
 ### HTML/JS
 
@@ -81,8 +81,8 @@ Use the below support table to find what version of `lcjs-themes` is compatible 
 
 ## Contribute
 
-Suggest edits and additions with [GitHub Issues](https://github.com/Arction/lcjs-themes/issues)
+Suggest edits and additions with [GitHub Issues](https://github.com/Lightning-Chart/lcjs-themes/issues)
 
-Suggest integrating your own code changes with [GitHub Pull Requests](https://github.com/Arction/lcjs-themes/pulls)
+Suggest integrating your own code changes with [GitHub Pull Requests](https://github.com/Lightning-Chart/lcjs-themes/pulls)
 
 Or get directly in touch with the creators by leaving a general inquiry at our [web site](https://lightningchart.com/contact/).
