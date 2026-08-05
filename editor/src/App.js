@@ -62,16 +62,33 @@ const examples = [
             ].forEach((item) => pie.addSlice(item.name, item.value))
 
             const spider = dashboard.createSpiderChart({ columnIndex: 0, rowIndex: 2, columnSpan: 1, rowSpan: 2 }).setTitle('')
+            spider.setAxisInterval({ start: 0, end: 100 }).setScrollStrategy(undefined).setScaleLabelStrategy(undefined)
             spider
-                .setAxisInterval({ start: 0, end: 50 })
-                .setScrollStrategy(undefined)
                 .addSeries()
                 .addPoints(
-                    { axis: 'Category 1', value: 10 },
-                    { axis: 'Category 2', value: 10 },
-                    { axis: 'Category 3', value: 20 },
-                    { axis: 'Category 4', value: 40 },
-                    { axis: 'Category 5', value: 20 },
+                    { axis: 'Category 1', value: 6 },
+                    { axis: 'Category 2', value: 22 },
+                    { axis: 'Category 3', value: 61 },
+                    { axis: 'Category 4', value: 76 },
+                    { axis: 'Category 5', value: 100 },
+                )
+            spider
+                .addSeries()
+                .addPoints(
+                    { axis: 'Category 1', value: 44 },
+                    { axis: 'Category 2', value: 8 },
+                    { axis: 'Category 3', value: 97 },
+                    { axis: 'Category 4', value: 68 },
+                    { axis: 'Category 5', value: 69 },
+                )
+            spider
+                .addSeries()
+                .addPoints(
+                    { axis: 'Category 1', value: 94 },
+                    { axis: 'Category 2', value: 63 },
+                    { axis: 'Category 3', value: 4 },
+                    { axis: 'Category 4', value: 67 },
+                    { axis: 'Category 5', value: 71 },
                 )
 
             const gaugeChart = dashboard.createGaugeChart({ columnIndex: 1, rowIndex: 2, columnSpan: 1, rowSpan: 2 }).setTitle('')
@@ -92,11 +109,9 @@ const examples = [
         icon: 'chart3D',
         create: (lc, container, theme) => {
             const chart = lc.Chart3D({ container, theme })
-            chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 0 })))
-            chart.addLineSeries().add([3, 2.6, 3, 4, 6.2, 3, 2.2, 3, 4, 3.5, 6, 5, 4, 5].map((y, i) => ({ x: i, y, z: 1 })))
-            chart.addLineSeries().add([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 2 })))
-            chart.getDefaultAxisX().fit()
-            chart.getDefaultAxisZ().setInterval({ start: -0.5, end: 2.5 })
+            chart.addLineSeries().appendJSON([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 0 })))
+            chart.addLineSeries().appendJSON([3, 2.6, 3, 4, 6.2, 3, 2.2, 3, 4, 3.5, 6, 5, 4, 5].map((y, i) => ({ x: i, y, z: 1 })))
+            chart.addLineSeries().appendJSON([1, 5, 4, 7, 2, 4, 2, 4, 5, 4, 9, 8, 6, 6.2].map((y, i) => ({ x: i, y, z: 2 })))
             return () => {
                 chart.dispose()
             }
@@ -174,12 +189,12 @@ function App() {
                 type === 'color'
                     ? `ColorHEX("${value}")`
                     : type === 'colorPalette'
-                    ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
-                    : type === 'fontFamily'
-                    ? `"${value}"`
-                    : type === 'boolean'
-                    ? String(value)
-                    : undefined
+                      ? `[${value.map((color) => `ColorHEX("${color}")`).join(', ')}]`
+                      : type === 'fontFamily'
+                        ? `"${value}"`
+                        : type === 'boolean'
+                          ? String(value)
+                          : undefined
             snippet += `\t${key}: ${valueStr},\n`
         })
         snippet += `})`
@@ -223,12 +238,12 @@ function App() {
                     type === 'color'
                         ? ColorHEX(value)
                         : type === 'colorPalette'
-                        ? value.map((color) => ColorHEX(color))
-                        : type === 'fontFamily'
-                        ? value
-                        : type === 'boolean'
-                        ? value
-                        : undefined,
+                          ? value.map((color) => ColorHEX(color))
+                          : type === 'fontFamily'
+                            ? value
+                            : type === 'boolean'
+                              ? value
+                              : undefined,
                 ]
             }),
         )
